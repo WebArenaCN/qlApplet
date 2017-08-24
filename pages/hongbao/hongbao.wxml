@@ -1,7 +1,7 @@
 <!--hongbao.wxml-->
 <view class="container">
 <!--红包背景图-->
-  <image class="beijing" src="../../images/hongbao@me.jpg"></image>
+ <image class="beijing" src="../../images/hongbao@me.jpg"></image>
   <!--红包内容-->
   <view class="ql_cont">
     <view class="hb_money"><text>0</text>元</view>

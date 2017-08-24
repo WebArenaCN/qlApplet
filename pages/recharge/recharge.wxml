@@ -6,6 +6,7 @@
     <text class="money">￥{{mymoney}}.00</text>
     <text class="chinese">车费余额</text>
   </view>
+  <navigator url="../hongbao/hongbao">跳转</navigator>
 </view>
 <!--充值金额模块-->
 <text class="balance-money">充值金额</text>
@@ -29,7 +30,7 @@
     <text>轻力单车不会以任何形式要求您输入银行账号和密码</text>
     <button bindtap="goblance" data-money="500">去充值</button>
   </view>
-  <view>押金{{yajinmoney}}元 <navigator url="url" bindtap="yajin">充押金</navigator></view>
+  <view>押金{{yajinmoney}}元 <navigator url="../hongbao/hongbao" bindtap="yajin">充押金</navigator></view>
 </view>
 <!--充值余额成功弹出层-->
 <modal class="mb-balance" hidden="{{lockhidden}}" title="充值成功" confirm-text="确定" bindconfirm="confirm" no-cancel="true">

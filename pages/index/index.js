@@ -1,57 +1,38 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var latitude, longitude
+var latitude, longitude,userInfo;
 //经纬度参数
 Page({
   data: {
-    latitude: 22.543099,
-    longitude: 114.057868,
+    latitude:22.543099,
+    longitude:114.057868,
     lockhidden: true,
     markers: [{
       //摩拜单车的位置
-        iconPath: "../../images/bike@red.png",
+        iconPath: "../../images/bike_normal.png",
         id: 1,
-        latitude: 22.540069,
-        longitude: 114.059878,
-        width: 40,
-        height: 40
-      }, {
-        iconPath: "../../images/bike@white.png",
+        latitude:34.7468,
+        longitude:113.625368,
+        width:40,
+        height:50
+      },
+      {
+        //摩拜单车的位置
+        iconPath: "../../images/bike_normal.png",
         id: 2,
-        latitude: 22.544069,
-        longitude: 114.050878,
+        latitude: 34.7472,
+        longitude: 113.625370,
         width: 40,
-        height: 40
-      }, {
-        iconPath: "../../images/bike@red.png",
-        id: 3,
-        latitude: 22.546069,
-        longitude: 114.056878,
-        width: 40,
-        height: 40
-      },{
-        iconPath: "../../images/tome.png",
-        id: 4,
-        latitude: 22.546099,
-        longitude: 114.057868,
-        width: 70,
-        height: 30
-      },{
-        iconPath: "../../images/hongbao.png",
-        id: 5,
-        latitude: 22.543069,
-        longitude: 114.056878,
-        width: 40,
-        height: 40
+        height: 50
       },{
       // 我的位置
-        iconPath: "../../images/lable@icon.png",
-        id: 0,
-        latitude: 22.543099,
-        longitude: 114.057868,
-        width: 40,
-        height: 40
+        iconPath: "../../images/myloc.png",
+        id:0,
+        latitude:latitude,
+        longitude:longitude,
+        width:40,
+        height:50
      }],
      //控件
     controls: [{
@@ -101,25 +82,31 @@ Page({
     }]
   },
   onLoad: function () {
-    var that = this
+    var that = this;
     // 获取当前经纬度
     wx.getLocation({
-      type: 'wgs84',
+      type: 'gcj02',
       success: function (res) {
         latitude = res.latitude
         longitude = res.longitude
-        console.log(latitude)
-        console.log(longitude)
+        console.log(latitude+','+longitude)
+        that.setData({
+          latitude: latitude,
+          longitude: longitude
+        });
+        
+      },
+      fail:function(e){
+        console.log(e)
       }
     })
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
+    app.getUserInfo(function(e){
       //更新数据
       that.setData({
-        latitude: latitude,
-        longitude: longitude,
-        userInfo:userInfo
+        userInfo:e
       })
+      console.log(that)
     })
   },
   // 控件处理程序

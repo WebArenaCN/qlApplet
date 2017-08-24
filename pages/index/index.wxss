@@ -32,10 +32,12 @@ modal {
   color: #ccc;
 }
 .ql_scan{
+  background-color: #EEA235;
+  border-radius:40px;
   position: fixed;
-  bottom:180rpx;
+  bottom:150rpx;
   margin: 0 auto;
-  width:150px;
-  height:55px;
- overflow-x: scroll
+  width:145px;
+  height:38px;
+
 }
