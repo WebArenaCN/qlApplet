@@ -1,0 +1,14 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/recharge/recharge",
+    "pages/hongbao/hongbao",
+    "pages/service/service"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#242424",
+    "navigationBarTitleText": "轻力单车",
+    "navigationBarTextStyle":"white"
+  }
+}

@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container">
+  <!--map模块-->
+  <map class="ql-map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" controls="{{controls}}" bindcontroltap="controltap"/>
+  <!--扫码弹出层-->
+
+    <image class="ql_scan" src="../../images/lock.png"></image>
+  
+  <modal class="ql-lock" hidden="{{lockhidden}}" title="提示" confirm-text="确定" bindconfirm="confirm" no-cancel="true">
+    请扫描车身或者车锁上的二维码
+  </modal>
+  <!--newm模块-->
+  <navigator class="ql-new" url="../../pages/recharge/recharge">
+    <image src="../../images/mywallet.png"></image>
+    <text>限时活动： 充值返利，充了就返</text>
+    <text class="right">></text>
+  </navigator>
+</view>
