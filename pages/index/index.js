@@ -8,16 +8,8 @@ Page({
     scale:18,
     latitude:0,
     longitude:0,
-    showModalStatus: false
-    // markers: [{
-    //   //摩拜单车的位置
-    //     iconPath: "../../images/bike_normal.png",
-    //     id: 1,
-    //     latitude:34.7468,
-    //     longitude:113.625368,
-    //     width:40,
-    //     height:50
-    //   },
+    showModalStatus: false,
+   
     //   {
     //     //摩拜单车的位置
     //     iconPath: "../../images/bike_normal.png",
@@ -163,7 +155,16 @@ Page({
         // console.log(latitude+','+longitude)
         that.setData({
           latitude: res.latitude,
-          longitude: res.longitude
+          longitude: res.longitude,
+          markers: [{
+            //我的的位置
+            iconPath: "/images/marker.png",
+            id: 100,
+            latitude: res.latitude,
+            longitude:res.longitude,
+            width: 40,
+            height: 50
+          }],
         });
         
       },
@@ -255,7 +256,14 @@ Page({
   },
   // 控件处理程序
   controltap(e) {
+    var that=this;
     // 二维码控件处理
+    if(e.controlId==1){
+    
+      that.setData({
+        scale: ++this.data.scale
+      })
+    };
       if (e.controlId == 2){
         wx.scanCode({
           success: (res) => {
@@ -280,6 +288,19 @@ Page({
           url: '../recharge/recharge'
         })
       }
+  },
+  //移动视野
+  moveToLocation:function(){
+    this.mapCtx.moveToLocation();
+  },
+  //中心
+  getCenterLocation: function () {
+    this.mapCtx.getCenterLocation({
+      success: function (res) {
+        console.log(res.longitude)
+        console.log(res.latitude)
+      }
+    })
   },
   //事件处理函数
   bindViewTap: function () {

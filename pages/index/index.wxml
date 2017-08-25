@@ -11,13 +11,13 @@
   </modal>  -->
 
   <!--newm模块-->
-   <navigator class="ql-new" url="../../pages/recharge/recharge">
+   <!-- <navigator class="ql-new" url="../../pages/recharge/recharge">
     <image src="../../images/mywallet.png"></image>
     <text>限时活动： 充值返利，充了就返</text>
     <text class="right">></text>
   </navigator> 
 
-<view class="btn" bindtap="powerDrawer" data-statu="open">button</view> 
+<view class="btn" bindtap="powerDrawer" data-statu="open">button</view>  -->
   
 
 <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
