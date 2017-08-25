@@ -3,12 +3,13 @@
     "pages/index/index",
     "pages/recharge/recharge",
     "pages/hongbao/hongbao",
-    "pages/service/service"
+    "pages/service/service",
+    "pages/reg/reg"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#242424",
+    "navigationBarBackgroundColor": "black",
     "navigationBarTitleText": "轻力单车",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle":"#FFFFFF"
   }
 }

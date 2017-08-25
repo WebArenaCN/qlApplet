@@ -1,70 +1,4 @@
-/**index.wxss**/
-/*<!--map模块-->*/
-.ql-map {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
- 
-   height: 100%; 
-  z-index: 1;
-}
-/*<!--扫码弹出层-->*/
-modal {
-  text-align: left;
-}
- /*<!--newm模块-->*/
-.ql-new {
-  z-index: 100;
-  width: 690rpx;
-  height: 100rpx;
-  background-color: #fff;
-  position: fixed;
-  top: 30rpx;
-  left: 30rpx;
-  box-shadow: 0 2px 5px #ccc;
-  line-height: 100rpx;
-}
-.ql-new image {
-  float: left;
-  display: block;
-  height: 50rpx;
-  width: 50rpx;
-  margin: 25rpx 20rpx 0 30rpx;
-}
-.ql-new .right{
-  float: right;
-  margin-right: 30rpx;
-  color: #ccc;
-}
-.ql_scan{
-  background-color: #EEA235;
-  border-radius:40px;
-  position: fixed;
-  bottom:150rpx;
-  margin: 0 auto;
-  width:145px;
-  height:40px;
-  z-index: 100;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* pages/reg/reg.wxss */
 /*button*/
 .btn { 
  width: 80%; 
@@ -90,15 +24,13 @@ modal {
 } 
   
 /*content*/
-.drawer_box { 
- width: 650rpx; 
- overflow: hidden; 
- position: fixed; 
- top: 50%; 
- left: 0; 
+.myform { 
+ width: 100%; 
+height: 100%;
+  
  z-index: 1001; 
  background: #FAFAFA; 
- margin: -150px 50rpx 0 50rpx; 
+
  border-radius: 3px; 
 } 
   
@@ -107,17 +39,18 @@ modal {
  font: 20px "microsoft yahei"; 
  text-align: center; 
 } 
-.drawer_content { 
- height:150px; 
- overflow-y: scroll; /*超出父盒子高度可滚动*/
-} 
+
   
 .btn_ok{ 
  padding: 10px; 
- font: 20px "microsoft yahei"; 
+ font:16px "microsoft yahei"; 
  text-align: center; 
- border-top: 1px solid #E8E8EA; 
+
+ border-radius: 5px;
  color: #3CC51F; 
+ width: 100px;
+
+ margin: 0 auto;
 } 
   
 .top{ 
