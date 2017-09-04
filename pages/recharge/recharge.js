@@ -72,16 +72,38 @@ Page({
       success: function (res) {
         if(res.confirm){
           wx.clearStorageSync();
-          wx.showToast({
-            title: '退出成功！！',
-            icon: "success",
-            duration: 1000,
-            success: function () {
-              wx.navigateTo({
-                url: '../reg/reg',
+          wx.removeStorageSync({
+            key: 'token',
+            success: function (res) {
+              wx.removeStorageSync({
+                key: 'phone',
+                success: function (res) {
+                  wx.showToast({
+                    title: '退出成功！！',
+                    icon: "success",
+                    duration: 1000,
+                    success: function () {
+                      wx.navigateTo({
+                        url: '../reg/reg',
+                      })
+                    }
+                  })
+                }
+                 
+              })
+            },
+            fail:function(res){
+              wx.showToast({
+                title: '注销失败',
+                icon: "loading",
+                duration: 1000,
+                success: function () {
+                  
+                }
               })
             }
           })
+         
         }else{
 
         }
