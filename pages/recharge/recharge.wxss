@@ -38,22 +38,25 @@
 .balance-demo button {
   display: inline-block;
   width: 300rpx;
-  height: 120rpx;
+  height:90rpx;
+ 
   margin: 10rpx 15rpx;
   background-color: transparent;
-  border: 1px solid limegreen;
+  border: 1px solid #EEA235;
+ 
 }
 .balance-demo button[data-id="5"] {
-  padding-top: 30rpx;
+  
 }
 .balance-demo button.selected {
-  background-color: limegreen;
-  border: 1px solid limegreen;
+  background-color: #EEA235;
+
   color: #fff;
 }
 .balance-demo button text {
   display: block;
-  line-height: 60rpx;
+  height: 90rpx;
+
 }
 .balance-demo button .botton {
   color: limegreen;
@@ -87,7 +90,15 @@
 .goblance button {
   color: #fff;
   margin: 20rpx 15rpx;
-  background-color: limegreen;
-  border: 1px solid limegreen;
+  background-color: #EEA200;
+  border: 1px solid #EEA200;
 }
+.clearStorage{
+  display: inline-block;
+  width:88%;
+  margin-left:6%;
+ background-color: #EEA200;
+ color: #fff;
+}
+
 

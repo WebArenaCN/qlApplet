@@ -14,42 +14,42 @@ Page({
     cartTotal: 0,
     lockhidden: true,
     yajinhidden: true,
-    sucmoney: 424,
+    sucmoney:0,
     color: "limegreen",
     nocancel: false,
     tajinmodaltitle: "押金充值",
     yajinmodaltxt: "去充值",
     yajinmoney: 0,
-    yajintxt: "您是否确定充值押金299元？押金充值后可以在摩拜单车App全额退款",
+    yajintxt: "您是否确定充值押金299元？押金充值后可以在轻力单车App全额退款",
       navList: [{
         id: 1,
-        chongzhi: '充￥300',
-        song: '送￥124',
-        money: "424"
+        chongzhi: '￥2',
+        song: '0',
+        money: "2"
       },
       {
         id: 2,
-        chongzhi: '充￥100',
-        song: '送￥50',
-        money: "150"
+        chongzhi: '￥5',
+        song: '0',
+        money: "5"
       },
       {
         id: 3,
-        chongzhi: '充￥50',
-        song: '送￥20',
-        money: "70"
+        chongzhi: '￥10',
+        song: '0',
+        money: "10"
       },
       {
         id: 4,
-        chongzhi: '充￥20',
-        song: '送￥5',
-        money: "25"
+        chongzhi: '￥20',
+        song: '',
+        money: "20"
       },
       {
         id: 5,
-        chongzhi: '充￥10',
-        song: '',
-        money: "10"
+        chongzhi: 'VIP免费骑行',
+        song: '0',
+        money: "299"
       }
     ],
   },
@@ -64,12 +64,45 @@ Page({
       curIndex: index,
     })
   },
+  //注销
+  clearStorage:function(){
+    wx.showModal({
+      title: '提示',
+      content: '确定要注销么?',
+      success: function (res) {
+        if(res.confirm){
+          wx.clearStorageSync();
+          wx.showToast({
+            title: '退出成功！！',
+            icon: "success",
+            duration: 1000,
+            success: function () {
+              wx.navigateTo({
+                url: '../reg/reg',
+              })
+            }
+          })
+        }else{
+
+        }
+     
+      }
+    })
+  
+  },
   //页面加载模块
   onLoad: function () {
-    b = 424;
+    b = 0;
     this.setData({
       mymoney: money,
     })
+    var login = wx.getStorageSync('token');
+    if(login){
+      wx.redirectTo({
+        url: '',
+      })
+    }
+
   },
   buttonEventHandle:function(event){
   },

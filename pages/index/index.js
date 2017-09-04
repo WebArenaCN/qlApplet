@@ -9,9 +9,9 @@ Page({
     latitude:0,
     longitude:0,
     showModalStatus: false,
-   
+    showReg:true,
     //   {
-    //     //摩拜单车的位置
+    //     //单车的位置
     //     iconPath: "../../images/bike_normal.png",
     //     id: 2,
     //     latitude: 34.7472,
@@ -79,70 +79,9 @@ Page({
      this.util(currentStatu)
    
   }, 
-  powerDrawer: function (e) {
-    var currentStatu = e.currentTarget.dataset.statu;
-    this.util(currentStatu)
-  },
-  util: function (currentStatu) {
-    /* 动画部分 */
-    // 第1步：创建动画实例 
-    var animation = wx.createAnimation({
-      duration: 200, //动画时长 
-      timingFunction: "linear", //线性 
-      delay: 0 //0则不延迟 
-    });
-
-    // 第2步：这个动画实例赋给当前的动画实例 
-    this.animation = animation;
-
-    // 第3步：执行第一组动画 
-    animation.opacity(0).rotateX(-100).step();
-
-    // 第4步：导出动画对象赋给数据对象储存 
-    this.setData({
-      animationData: animation.export()
-    })
-
-    // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function () {
-      // 执行第二组动画 
-      animation.opacity(1).rotateX(0).step();
-      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
-      this.setData({
-        animationData: animation
-      });
-
-      //关闭 
-      if (currentStatu == "close") {
-      
-        this.setData(
-          {
-            showModalStatus: false
-          }
-        );
-      }
-    }.bind(this), 200)
-
-    // 显示 
-    if (currentStatu == "open") {
-      this.setData(
-        {
-          showModalStatus: true
-        }
-      );
-    }
-  },
-  sayname:function(e){
-    var that=this;
-  that.setData({
-    text:e.detail.value
-  })
-  },
-  reg: function (e) {
   
-    console.log(this);
-   console.log(this.data.text);
-  },
+ 
+
   onLoad: function (options) {
    this.timer=options.timer;
    var that=this;
@@ -157,13 +96,13 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude,
           markers: [{
-            //我的的位置
+            //我的位置
             iconPath: "/images/marker.png",
             id: 100,
             latitude: res.latitude,
             longitude:res.longitude,
-            width: 40,
-            height: 50
+            width:25,
+            height:40
           }],
         });
         
@@ -223,22 +162,17 @@ Page({
     });
     var userPhone = wx.getStorageSync('userPhone');
     var token = wx.getStorageSync('token');
-
     console.log(userPhone);
     console.log(token);
     if (userPhone) {
       this.setData({ userPhone:userPhone});
     }else{
-      // wx.showToast({
-      //   title: '请输入你的手机号码',
-      //   icon:'loading',
-      //   duration: 2000,
-      //   success:function(){
-         
-      //   }
-      // })
+     
+      wx.navigateTo({
+        url: '../reg/reg',
+      })
     }
-    if (userPassword) {
+    if (userPhone) {
       this.setData({token:token });
     }
     wx.request({
@@ -258,11 +192,13 @@ Page({
   controltap(e) {
     var that=this;
     // 二维码控件处理
-    if(e.controlId==1){
-    
+    if(e.controlId== 1){
+    if(that.data.scale!=5){
       that.setData({
-        scale: ++this.data.scale
+        scale: --this.data.scale
       })
+    }
+     
     };
       if (e.controlId == 2){
         wx.scanCode({
@@ -294,7 +230,7 @@ Page({
     this.mapCtx.moveToLocation();
   },
   //中心
-  getCenterLocation: function () {
+  getCenterLocation: function (){
     this.mapCtx.getCenterLocation({
       success: function (res) {
         console.log(res.longitude)
@@ -313,5 +249,18 @@ Page({
     this.setData({
       lockhidden: true
     });
+  },
+  onShareAppMessage: function () {
+
+    return {
+
+      title: '轻力单车小程序',
+
+      desc: '共享单车',
+
+      path: '/pages/index/index'
+
+    }
+
   }
 })

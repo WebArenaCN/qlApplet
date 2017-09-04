@@ -1,31 +1,50 @@
 <!--pages/reg/reg.wxml-->
 <!--用户登录  -->
 
-<view class="myform">
-  <form bindsubmit="reg">
+<view class="myform" >
+  <form bindsubmit="subform">
 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="mobile" value="110"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="phone" value="拒绝伸手党"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="Email" value="仅供学习使用"></input> 
- </view> 
- <view class="top bottom grid"> 
-  <label class="title col-0">备注</label> 
-  <input class="input_base input_h30 col-1" name="bz"></input> 
- </view> 
 
- <button class="btn_ok" type='success' bindtap="" >确定</button> 
+    <div class="weui-cells weui-cells_form">
+      <form bindsubmit="getcodeform">
+        <div class="weui-cell weui-cell_vcode">
+          <div class="weui-cell__hd">
+            <label class="weui-label">手机号</label>
+          </div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" name="phone" type="number" placeholder="请输入手机号" />
+          </div>
+          <div class="weui-cell__ft">
+            <button size="mini" type="primary" class="weui-vcode-btn" form-type="submit">获取验证码</button>
+          </div>
+        </div>
+      </form>
+
+
+      <div class="weui-cell weui-cell_vcode">
+        <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" name='yzcode' type="text" placeholder="请输入验证码" />
+        </div>
+
+      </div>
+      <modal class="" hidden="{{successIcon}}" no-cancel="true">
+       <icon type="success" />
+       成功
+      </modal> 
+      <modal class="" hidden="{{failIcon}}" confirm-text="确定" bindconfirm="confirm" no-cancel="true" >
+        <icon type="warn" />
+        失败
+      </modal> 
+      <view class='page__bd page__bd_spacing'>
+          <button type="primary" class='weui-btn' form-type="submit">提交</button>
+      </view>
+     
+    </div>
+
+
+
+
 
   </form>
 </view>
