@@ -1,3 +1,9 @@
 {
-  "navigationBarTitleText": "登录界面"
+
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "登录界面",
+    "navigationBarTextStyle": "white"
+  }
 }

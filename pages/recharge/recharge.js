@@ -71,38 +71,32 @@ Page({
       content: '确定要注销么?',
       success: function (res) {
         if(res.confirm){
-          wx.clearStorageSync();
-          wx.removeStorageSync({
-            key: 'token',
-            success: function (res) {
-              wx.removeStorageSync({
-                key: 'phone',
-                success: function (res) {
-                  wx.showToast({
-                    title: '退出成功！！',
-                    icon: "success",
-                    duration: 1000,
-                    success: function () {
-                      wx.navigateTo({
-                        url: '../reg/reg',
-                      })
-                    }
+          // wx.clearStorageSync();
+          try {
+            wx.removeStorageSync('token');
+            wx.removeStorageSync('phone');
+            wx.showToast({
+              title: '注销成功',
+              icon: "success",
+              duration: 1000,
+              success: function () {
+                  wx.navigateTo({
+                    url: '../reg/reg',
                   })
-                }
-                 
-              })
-            },
-            fail:function(res){
-              wx.showToast({
-                title: '注销失败',
-                icon: "loading",
-                duration: 1000,
-                success: function () {
-                  
-                }
-              })
-            }
-          })
+              }
+            })
+          } catch (e) {
+            // Do something when catch error
+            wx.showToast({
+              title: '注销失败',
+              icon: "loading",
+              duration: 1000,
+              success: function () {
+
+              }
+            })
+          }
+      
          
         }else{
 
@@ -118,11 +112,11 @@ Page({
     this.setData({
       mymoney: money,
     })
-    var login = wx.getStorageSync('token');
-    if(login){
-      wx.redirectTo({
-        url: '',
-      })
+    var token=wx.getStorageSync('token');
+    if(token){
+      
+    }else{
+       
     }
 
   },

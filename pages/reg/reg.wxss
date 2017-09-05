@@ -1,5 +1,5 @@
 /* pages/reg/reg.wxss */
-
+@import "../../weui.wxss";
 /*button*/
   
 /*mask*/
@@ -17,6 +17,14 @@
  width: 90%;
 }
 .weui-vcode-btn{
+  display: inline-block;
   width: 100px;
   margin-right: 20px;
+  height:35px;
+  line-height:35px;
+text-align: center;
+  font-size:13px;
+}
+.weui-cell__bd input{
+  padding-left:20px;
 }

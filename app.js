@@ -20,5 +20,21 @@ App({
   },
   globalData:{
     userInfo:null
+  },
+  onShow:function(){
+    var token = wx.getStorageSync('token');
+    if (token) {
+      wx.redirectTo({
+        url: 'pages/index/index',
+      })
+    } else {
+      console.log(111)
+      wx.redirectTo({
+        url: 'pages/reg/reg',
+      })
+    }
+  },
+  onLaunch:function(){
+  
   }
 })

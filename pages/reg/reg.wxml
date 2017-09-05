@@ -15,7 +15,7 @@
             <input class="weui-input" name="phone" type="number" placeholder="请输入手机号" />
           </div>
           <div class="weui-cell__ft">
-            <button size="mini" type="primary" class="weui-vcode-btn" form-type="submit">获取验证码</button>
+            <button type="primary" class="weui-vcode-btn" form-type="submit">获取验证码</button>
           </div>
         </div>
       </form>

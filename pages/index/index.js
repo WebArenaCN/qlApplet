@@ -220,9 +220,21 @@ Page({
       };
     //充值控件处理
       if (e.controlId == 3) {
-        wx.navigateTo({
-          url: '../recharge/recharge'
-        })
+        var login = wx.getStorageSync('token');
+        if (login) {
+          wx.navigateTo({
+            url: '../recharge/recharge'
+          })
+        }else{
+          wx.showModal({
+            title: '你还未登录！',
+            content: '',
+            showCancel:false,
+            
+          })
+        }
+        
+       
       }
   },
   //移动视野
