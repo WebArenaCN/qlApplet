@@ -27,20 +27,7 @@ Page({
   getcodeform:function(e){
     var that=this;
     if(e.detail.value.phone.length==0){
-      //  wx.showToast({
-      //   title: '手机号不能为空',
-      //   icon:'loading',
-      //   duration: 1500,
-      //   success: function(){
-
-      //    }
-      // });
-      // wx.showModal({
-      //   title: "警告",
-      //   content: "咱是不是还得给你钱？！！",
-      //   showCancel: false,
-      //   confirmText: "不不不不"
-      // })
+    
        wx.showModal({
          title: '提示',
          content: '手机号不能为空！！',
@@ -104,7 +91,6 @@ Page({
       wx.request({
         url: 'https://www.qinglibike.com/qlbike/user/login?'+'phone='+phone+'&code='+yzcode,
         method:'post',
-        
         header: {
           'Content-Type': 'application/json'
         }, 
@@ -114,7 +100,7 @@ Page({
                 res2:token
               })
               var token=res.data.data;
-              console.log(res)
+              console.log(res);
               wx.setStorageSync('token',token);
               wx.setStorageSync('userPhone',phone);
              

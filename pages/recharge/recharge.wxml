@@ -54,13 +54,13 @@
 
 <modal class="mb-yajin" hidden="{{yajinhidden}}" title="{{tajinmodaltitle}}" confirm-text="{{yajinmodaltxt}}" cancel-text="取消" bindcancel="yajincancel" bindconfirm="yajinconfirm" no-cancel="{{nocancel}}">
     <view>
-       <view>  
-      
-       </view>
-      <text>   {{yajintxt}}。</text>
+        <view>
+
+        </view>
+        <text>   {{yajintxt}}。</text>
 
     </view>
 
-  
+
 </modal>
 <button class="clearStorage" hidden="{{showReg}}" bindtap="clearStorage">注销</button>

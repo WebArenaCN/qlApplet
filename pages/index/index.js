@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var latitude, longitude,userInfo;
+var latitude, longitude,userInfo,circles;
 //经纬度参数
 Page({
   data: {
@@ -10,23 +10,30 @@ Page({
     longitude:0,
     showModalStatus: false,
     showReg:true,
+    circles:[],
+    markers:[
     //   {
     //     //单车的位置
     //     iconPath: "../../images/bike_normal.png",
-    //     id: 2,
-    //     latitude: 34.7472,
-    //     longitude: 113.625370,
+    //     id: 10,
+    //     latitude:34.7472,
+    //     longitude:113.625370,
     //     width: 40,
     //     height: 50
     //   },{
     //   // 我的位置
     //     iconPath: "../../images/myloc.png",
-    //     id:4,
+    //     id:11,
     //     latitude:latitude,
     //     longitude:longitude,
     //     width:40,
     //     height:50
-    //  }],
+    //  }
+     
+     
+     
+     
+     ],
     //  //控件
     // controls: [{
     //   // 我的位置控件
@@ -37,39 +44,6 @@ Page({
     //     top: 590,
     //     width: 50,
     //     height: 50
-    //   },
-    //   clickable: true
-    // }, {
-    //   // 红包控件
-    //   id: 1,
-    //   iconPath: "../../images/hongbao.png",
-    //   position: {
-    //     left: 350,
-    //     top: 525,
-    //     width: 50,
-    //     height: 50
-    //   },
-    //   clickable: true
-    //   }, {
-    //     // 充值控件
-    //     id: 2,
-    //     iconPath: "../../images/chongzhi.png",
-    //     position: {
-    //       left: 350,
-    //       top: 590,
-    //       width: 50,
-    //       height: 50
-    //     },
-    //     clickable: true
-    // }, {
-    //   //二维码控件
-    //   id: 3,
-    //   iconPath: "../../images/lock.png",
-    //   position: {
-    //     left:100,
-    //     top: 580,
-    //     width:120,
-    //     height:60
     //   },
     //   clickable: true
     // }]
@@ -89,17 +63,25 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success:(res)=>{
-        // latitude = res.latitude
-        // longitude = res.longitude
-        // console.log(latitude+','+longitude)
+       latitude = res.latitude
+       longitude = res.longitude
+     console.log(latitude+','+longitude)
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
+          circles: [{
+            latitude: res.latitude,
+            longitude: res.longitude,
+            color: 'red',
+            fillColor: 'white',
+            radius: 30,
+            strokeWidth: 1
+          }],
           markers: [{
             //我的位置
             iconPath: "/images/marker.png",
-            id: 100,
-            latitude: res.latitude,
+            id:100,
+            latitude:res.latitude,
             longitude:res.longitude,
             width:25,
             height:40

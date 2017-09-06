@@ -17,10 +17,10 @@ Page({
     sucmoney:0,
     color: "limegreen",
     nocancel: false,
-    tajinmodaltitle: "押金充值",
+    tajinmodaltitle: "成为VIP",
     yajinmodaltxt: "去充值",
     yajinmoney: 0,
-    yajintxt: "您是否确定充值押金299元？押金充值后可以在轻力单车App全额退款",
+    yajintxt: "您是否确定充值299元？成为我们的VIP用户，永久免费骑行",
       navList: [{
         id: 1,
         chongzhi: '￥2',
@@ -136,6 +136,8 @@ Page({
       lockhidden: true
     });
   },
+
+  
   //押金功能模块
   yajin:function(event) {
     this.setData({
@@ -151,16 +153,19 @@ Page({
     if(yajinid == 0){
       yajinid = 1;
       this.setData({
+        yajinhidden:false,
         nocancel: true,
-        yajintxt: "您已成功充值押金299元",
+        lockhidden:true,
+        yajintxt: "您已成功成为VIP用户",
         tajinmodaltitle: "充值成功",
         yajinmodaltxt: "完成"
       });    
     } else {
       yajinid = 0;
       this.setData({
+        lockhidden: true,
         nocancel: false,
-        yajinhidden: true,
+        yajinhidden: false,
         yajinmoney: 299
       });
     }
