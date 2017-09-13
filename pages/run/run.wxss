@@ -1,0 +1,74 @@
+.ql_run_map{
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  top: 19%;
+  left: 0; 
+  
+
+}
+.ql-new {
+  border: 1px solid black;
+  z-index: 100;
+  width:100%;
+  height: 100%;
+  background-color: #eee;
+  position:fixed;
+  top:0rpx;
+  left:0rpx;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+.ql-new .ql_run>view{
+  border: 1px solid red;
+  display: inline-block;
+  width:32%;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+}
+.sw1{
+  width: 35%;
+  text-align: end;
+}
+.ql_tips{
+   border: 1px solid red;
+   width: 100%;
+  text-align: center;
+  font-size:1.5em;
+  line-height:60px;
+}
+.ql_run{
+  
+  background-color:#EEE;
+ height: 100px;
+  
+}
+.ql_run view,.ql_run text,.ql_run switch{
+  background: #EEE;
+  color: #ED9F30;
+}
+.run_time_m,.run_time_min{
+  color: #ED9F30;
+}
+.bike_num{
+  color:#707070;
+}
+.ql-new  .run_tit{
+ color:#707070;
+}
+.bike_tit{
+  color:#ED9F30;
+  padding-right: 10px;
+}
+
+.ql_scan{
+  background-color: #EEA235;
+  border-radius:40px;
+  position: fixed;
+  bottom:150rpx;
+  margin: 0 auto;
+  width:145px;
+  height:40px;
+  z-index: 100;
+}

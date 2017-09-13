@@ -1,109 +1,160 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var latitude, longitude,userInfo,circles;
+var latitude, longitude, userInfo,bikeArr,markers;
 //经纬度参数
 Page({
   data: {
-    scale:18,
+    runhidden:true,
+    scale:19,
     latitude:0,
     longitude:0,
     showModalStatus: false,
     showReg:true,
     circles:[],
-    markers:[
-    //   {
-    //     //单车的位置
-    //     iconPath: "../../images/bike_normal.png",
-    //     id: 10,
-    //     latitude:34.7472,
-    //     longitude:113.625370,
-    //     width: 40,
-    //     height: 50
-    //   },{
-    //   // 我的位置
-    //     iconPath: "../../images/myloc.png",
-    //     id:11,
-    //     latitude:latitude,
-    //     longitude:longitude,
-    //     width:40,
-    //     height:50
-    //  }
-     
-     
-     
-     
-     ],
-    //  //控件
-    // controls: [{
-    //   // 我的位置控件
-    //   id: 0,
-    //   iconPath: "../../images/imgs_main_location@2x.png",
-    //   position: {
-    //     left: 10,
-    //     top: 590,
-    //     width: 50,
-    //     height: 50
-    //   },
-    //   clickable: true
-    // }]
+    
   },
-  powerDrawer: function (e) {
-     var currentStatu = e.currentTarget.dataset.statu;
-     this.util(currentStatu)
-   
-  }, 
+
   
- 
+ onReady:function(e){
+   this.mapCtx = wx.createMapContext('mymap')
+ },
 
   onLoad: function (options) {
+  
    this.timer=options.timer;
    var that=this;
     // 获取当前经纬度
     wx.getLocation({
       type: 'gcj02',
       success:(res)=>{
-       latitude = res.latitude
-       longitude = res.longitude
-     console.log(latitude+','+longitude)
+       let  latitude = res.latitude
+       let longitude = res.longitude;
+       let marker = this.createMarker(res);
+       console.log(latitude+','+longitude);
+       var markers=[];
+       markers.push(marker);
+
+
+      
+       wx.getStorage({
+         key: 'token',
+         success: function(res) {
+        console.log(res.data);
+           var url = "https://www.qinglibike.com/qlbike/bike/list/" + longitude + "/" + latitude + "/" + "0.007" + "/" + res.data;
+           wx.request({
+             method: 'GET',
+             url: url,
+             header: {
+               'Content-Type': 'application/json'
+             },
+             success: function (res) {
+               console.log(res)
+               if (res.data.status == 200) {
+                
+                 var bikeArr=res.data.data;
+               console.log(bikeArr)
+                   for (var item in bikeArr) {
+
+                     if (bikeArr[item].bikealert!= 0){
+                       var marker = {
+                         iconPath: '/images/bike_hb.png',
+                         id: bikeArr[item].bikeid || 0,
+                         latitude: bikeArr[item].bikelat,
+                         longitude: bikeArr[item].bikelng,
+                         width:35,
+                         height:35
+                       };
+                     }else{
+                       var marker = {
+                         iconPath: '/images/bike_normal.png',
+                         id: bikeArr[item].bikeid || 0,
+                         latitude: bikeArr[item].bikelat,
+                         longitude: bikeArr[item].bikelng,
+                         width:35,
+                         height:35
+                       };
+                     }
+                    
+               //   var marker =that.createrMarker(bikeArr[item]);
+                     markers.push(marker);
+                  
+                   };
+                   that.setData({
+                     markers:markers
+                   })
+                  
+                
+
+                  
+               }else{
+                 var cont=String(res.data.msg);
+                //  wx.showModal({
+                //    title: '提示',
+                //    content: cont,
+                //    showCancel:false,
+                //    success:function(res){
+                //           // wx.redirectTo({
+                //           //   url: '../reg/reg',
+                //           // })
+                //    },
+                //    fail:function(res){
+
+                //    }
+                //  })
+               }
+
+             },
+             fail: function (res) {
+               
+             }
+
+           })
+         },
+         fail:function( ){
+           wx.showModal({
+             title: '提示',
+             content: '用户未登录',
+             showCancel: false,
+             success: function (res) {
+               if (res.confirm) {
+                 wx.navigateTo({
+                   url: '../reg/reg',
+                 });
+               } else if (res.cancel) {
+                 console.log('用户点击取消')
+               }
+             }
+           })
+         }
+       })
+         
+    
+     
+
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
-          circles: [{
-            latitude: res.latitude,
-            longitude: res.longitude,
-            color: 'red',
-            fillColor: 'white',
-            radius: 30,
-            strokeWidth: 1
-          }],
-          markers: [{
-            //我的位置
-            iconPath: "/images/marker.png",
-            id:100,
-            latitude:res.latitude,
-            longitude:res.longitude,
-            width:25,
-            height:40
-          }],
+
         });
         
       },
      
     });
+   
     wx.getSystemInfo({
 
       success:(res)=>{
-        console.log(this)
+       
         this.setData({
           controls:[{
             id:1,
             iconPath:"/images/focus.png",
             position:{
               left:10,
-              top:res.windowHeight-54,
-              width:30,
-              height:30
+              top:res.windowHeight-65,
+              width:45,
+              height:45
             },
             clickable:true
           }, {
@@ -113,7 +164,7 @@ Page({
               left: res.windowWidth / 2 - 80,
               top: res.windowHeight - 120,
               width:160,
-              height:50
+              height:45
             },
             clickable: true
           },{
@@ -142,57 +193,42 @@ Page({
         })
       },
     });
-    var userPhone = wx.getStorageSync('userPhone');
-    var token = wx.getStorageSync('token');
-    console.log(userPhone);
-    console.log(token);
-    if (userPhone) {
-      this.setData({ userPhone:userPhone});
-    }else{
-     
-      wx.navigateTo({
-        url: '../reg/reg',
-      })
-    }
-    if (userPhone) {
-      this.setData({token:token });
-    }
-    wx.request({
-      url: 'http://www.qinglibike.com/qlbike/servlet/AppRegisterServlet',
-
-    })
+  
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(e){
       //更新数据
       that.setData({
         userInfo:e
       })
-      console.log(that)
+      // console.log(that)
     })
   },
+
   // 控件处理程序
   controltap(e) {
-    var that=this;
+  
     // 二维码控件处理
     if(e.controlId== 1){
-    if(that.data.scale!=5){
-      that.setData({
-        scale: --this.data.scale
-      })
-    }
+     
+      this.moveTo();
+   
      
     };
       if (e.controlId == 2){
-        wx.scanCode({
-          success: (res) => {
-            console.log(res)
-          },
-          fail: (res) => {
-            this.setData({
-              lockhidden: false
-            });
-          }
+        wx.redirectTo({
+          url: '../run/run',
         })
+       
+        // wx.scanCode({
+        //   success: (res) => {
+        //     console.log(res)
+        //   },
+        //   fail: (res) => {
+        //     this.setData({
+        //       lockhidden: false
+        //     });
+        //   }
+        // })
       };
     //红包控件处理
       if(e.controlId == 4) {
@@ -202,28 +238,37 @@ Page({
       };
     //充值控件处理
       if (e.controlId == 3) {
-        var login = wx.getStorageSync('token');
-        if (login) {
-          wx.navigateTo({
-            url: '../recharge/recharge'
-          })
-        }else{
-          wx.showModal({
-            title: '你还未登录！',
-            content: '',
-            showCancel:false,
-            
-          })
-        }
+       
+       wx.getStorage({
+         key: 'token',
+         success: function(res) {
+            console.log(res);
+            wx.navigateTo({
+              url: '../recharge/recharge'
+            })
+         },
+         fail:function(){
+           wx.showModal({
+             title: '你还未登录！',
+             content: '',
+             showCancel: false,
+
+           })
+         }
+       })
+      
         
        
       }
   },
   //移动视野
-  moveToLocation:function(){
-    this.mapCtx.moveToLocation();
+  moveTo:function(e){
+   
+     this.mapCtx.moveToLocation();
   },
   //中心
+
+  
   getCenterLocation: function (){
     this.mapCtx.getCenterLocation({
       success: function (res) {
@@ -244,6 +289,35 @@ Page({
       lockhidden: true
     });
   },
+
+  createMarker(point){
+  let latitude=point.latitude;
+  let longitude=point.longitude;
+ 
+  if(point.bikeid==undefined){
+    var marker = {
+      iconPath: '/images/marker.png',
+      id: point.bikeid || 0,
+      latitude: latitude,
+      longitude: longitude,
+      width:15,
+      height:35
+    };
+   
+  }else{
+    var marker = {
+      iconPath: '/images/bike_normal.png',
+      id: point.bikeid || 0,
+      latitude: latitude,
+      longitude: longitude,
+      width: 30,
+      height: 30
+    };
+  }
+ 
+  return marker;
+  },
+
   onShareAppMessage: function () {
 
     return {

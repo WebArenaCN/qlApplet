@@ -71,23 +71,26 @@ Page({
       content: '确定要注销么?',
       success: function (res) {
         if(res.confirm){
-          // wx.clearStorageSync();
-          try {
-            wx.removeStorageSync('token');
-            wx.removeStorageSync('phone');
-            wx.showToast({
-              title: '注销成功',
-              icon: "success",
-              duration: 1000,
-              success: function () {
+          wx.removeStorage({
+            key: 'token',
+            success: function (res) {
+              wx.showToast({
+                title: '注销成功',
+                icon: "success",
+                duration: 1000,
+                success: function () {
                   wx.navigateTo({
                     url: '../reg/reg',
                   })
-              }
-            })
-          } catch (e) {
-            // Do something when catch error
-            wx.showToast({
+                }
+              })
+            }
+          })
+             
+        
+         
+        }else{
+          wx.showToast({
               title: '注销失败',
               icon: "loading",
               duration: 1000,
@@ -95,11 +98,6 @@ Page({
 
               }
             })
-          }
-      
-         
-        }else{
-
         }
      
       }
@@ -112,14 +110,13 @@ Page({
     this.setData({
       mymoney: money,
     })
-    var token=wx.getStorageSync('token');
-    if(token){
-      
-    }else{
-       
-    }
+   wx.getStorage({
+     key: 'token',
+     success: function(res) {
 
-  },
+     },
+   })
+  }, 
   buttonEventHandle:function(event){
   },
   //去充值功能模块

@@ -22,17 +22,31 @@ App({
     userInfo:null
   },
   onShow:function(){
-    var token = wx.getStorageSync('token');
-    if (token) {
-      wx.redirectTo({
-        url: 'pages/index/index',
-      })
-    } else {
-      console.log(111)
-      wx.redirectTo({
-        url: 'pages/reg/reg',
-      })
-    }
+    
+    wx.getStorage({
+      key: 'userPhone',
+      success: function(res) {
+        // if (){
+        //   wx.removeStorage({
+        //     key: 'userPhone',
+        //     success: function(res) {
+        //       console.log("Ok");
+        //     },
+        //   })
+        // }
+        // console.log(res.data)
+         wx.redirectTo({
+          url: 'pages/index/index',
+        })
+      },
+      fail:function(res){
+        console.log(res)
+        wx.redirectTo({
+          url: 'pages/reg/reg',
+        })
+      }
+    })
+   
   },
   onLaunch:function(){
   

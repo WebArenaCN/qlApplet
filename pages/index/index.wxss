@@ -1,5 +1,9 @@
 /**index.wxss**/
 /*<!--map模块-->*/
+.markers{
+  height: 100px;
+  border: 1px solid red;
+}
 .ql-map {
   position: absolute;
   left: 0;
@@ -7,9 +11,9 @@
   right: 0;
   bottom: 0;
   width: 100%;
- 
-   height: 100%; 
+  height:100%; 
   z-index: 1;
+ 
 }
 /*<!--扫码弹出层-->*/
 modal {
@@ -18,27 +22,53 @@ modal {
  /*<!--newm模块-->*/
 .ql-new {
   z-index: 100;
-  width: 690rpx;
-  height: 100rpx;
-  background-color: #fff;
-  position: fixed;
-  top: 30rpx;
-  left: 30rpx;
+  width:100%;
+  height:230rpx;
+  background-color: #eee;
+  position:fixed;
+  top: 10rpx;
+  left:0rpx;
   box-shadow: 0 2px 5px #ccc;
-  line-height: 100rpx;
 }
-.ql-new image {
-  float: left;
-  display: block;
-  height: 50rpx;
-  width: 50rpx;
-  margin: 25rpx 20rpx 0 30rpx;
+
+.ql-new .ql_run>view{
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+  height:35px; 
+  line-height:35px;
 }
-.ql-new .right{
-  float: right;
-  margin-right: 30rpx;
-  color: #ccc;
+.ql_tips{
+  
+  width: 100%;
+  text-align: center;
+  font-size:1.5em;
+  line-height:2em;
 }
+.ql_run{
+  border-top: 1px solid #fff;
+  background-color:#EEE;
+  opacity: 1;
+  height: 160rpx;
+}
+.ql_run view,.ql_run text,.ql_run switch{
+  background: #EEE;
+  color: #ED9F30;
+}
+.run_time_m,.run_time_min{
+  color: #ED9F30;
+}
+.bike_num{
+  color:#707070;
+}
+.ql-new  .run_tit{
+ color:#707070;
+}
+.bike_tit{
+  color:#ED9F30;
+  padding-right: 10px;
+}
+
 .ql_scan{
   background-color: #EEA235;
   border-radius:40px;

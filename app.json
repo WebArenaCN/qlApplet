@@ -4,7 +4,8 @@
     "pages/reg/reg",
     "pages/recharge/recharge",
     "pages/hongbao/hongbao",
-    "pages/service/service"
+    "pages/service/service",
+    "pages/run/run"
     
   ],
   "window":{

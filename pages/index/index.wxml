@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <view class="container">
   <!--map模块-->
-  <map class="ql-map" show-location="true"  longitude="{{longitude}}"  latitude="{{latitude}}" polyline=""  scale="{{scale}}"  markers="{{markers}}" controls="{{controls}}" bindcontroltap="controltap"/>
-   <!-- 扫码弹出层
+  <map class="ql-map" id="mymap" show-location="true" longitude="{{longitude}}" latitude="{{latitude}}" polyline="" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="controltap" />
+  <!-- 扫码弹出层
 
     <image class="ql_scan" src="../../images/scanma.png"></image>
   
@@ -10,45 +10,34 @@
     请扫描车身或者车锁上的二维码
   </modal>  -->
 
-  <!--newm模块-->
-   <!-- <navigator class="ql-new" url="../../pages/recharge/recharge">
-    <image src="../../images/mywallet.png"></image>
-    <text>限时活动： 充值返利，充了就返</text>
-    <text class="right">></text>
-  </navigator> 
+   <view class="ql-new" hidden="{{runhidden}}">
+    <view class='ql_tips'>
+        <text class='bike_tit'>骑行中</text>
+        <text class='bike_num'>256892</text>
+    </view>
+    <view class='ql_run'>
+      <view class=''>
+        <view class='run_tit'>骑行时间</view>
+        <view>
+          <text>8</text>
+          <text class='run_time_min'>min</text>
+        </view>
+      </view>
+      <view class=''>
+        <view class='run_tit'>骑行距离</view>
+        <view class='run_time_m'>90m</view>
+      </view>
+      <view class=''>
+        <view class='run_tit'>中途停车</view>
+        <switch checked='true' ></switch>
+      </view>
+    </view>
 
-<view class="btn" bindtap="powerDrawer" data-statu="open">button</view>  -->
+  </view>
   
 
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
 
 
-<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
-  
 
- <view class="drawer_title">弹窗标题</view> 
- <view class="drawer_content"> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="rName" value="可自行定义内容"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="mobile" value="110"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="phone" value="拒绝伸手党"></input> 
- </view> 
- <view class="top grid"> 
-  <label class="title col-0">标题</label> 
-  <input class="input_base input_h30 col-1" name="Email" value="仅供学习使用"></input> 
- </view> 
- <view class="top bottom grid"> 
-  <label class="title col-0">备注</label> 
-  <input class="input_base input_h30 col-1" name="bz"></input> 
- </view> 
- </view> 
- <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
-</view>
+ 
 </view>

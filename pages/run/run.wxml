@@ -1,0 +1,26 @@
+<!--pages/run/run.wxml-->
+ <!--newm模块-->
+  <view class="ql-new">
+    <view class='ql_tips'>
+        <text class='bike_tit'>骑行中</text>
+        <text class='bike_num'>256892</text>
+    </view>
+    <view class='ql_run'>
+      <view class='ql_wTime'>
+        <view class='run_tit'>骑行时间</view>
+        <view>
+          <text>8</text>
+          <text class='run_time_min'>min</text>
+        </view>
+      </view>
+      <view class='ql_wfar'>
+        <view class='run_tit'>骑行距离</view>
+        <view class='run_time_m'>90m</view>
+      </view>
+      <view class='sw1'>
+        <view class='run_tit '>中途停车</view>
+        <switch checked='true' ></switch>
+      </view>
+    </view>
+     <map class='ql_run_map' scale='10' show-location='true' longitude='113.1112' latitude='34.1111'></map>
+  </view>
