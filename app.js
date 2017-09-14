@@ -22,30 +22,25 @@ App({
     userInfo:null
   },
   onShow:function(){
-    
-    wx.getStorage({
-      key: 'userPhone',
-      success: function(res) {
-        // if (){
-        //   wx.removeStorage({
-        //     key: 'userPhone',
-        //     success: function(res) {
-        //       console.log("Ok");
-        //     },
-        //   })
-        // }
-        // console.log(res.data)
-         wx.redirectTo({
-          url: 'pages/index/index',
-        })
-      },
-      fail:function(res){
-        console.log(res)
-        wx.redirectTo({
-          url: 'pages/reg/reg',
-        })
-      }
-    })
+
+
+
+//需要改为token
+    // wx.getStorage({
+    //   key: 'userPhone',
+    //   success: function(res) {
+
+    //      wx.redirectTo({
+    //       url: 'pages/index/index',
+    //     })
+    //   },
+    //   fail:function(res){
+    //     console.log(res)
+    //     wx.redirectTo({
+    //       url: 'pages/reg/reg',
+    //     })
+    //   }
+    // })
    
   },
   onLaunch:function(){

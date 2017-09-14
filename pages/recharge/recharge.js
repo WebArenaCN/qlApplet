@@ -74,16 +74,22 @@ Page({
           wx.removeStorage({
             key: 'token',
             success: function (res) {
-              wx.showToast({
-                title: '注销成功',
-                icon: "success",
-                duration: 1000,
-                success: function () {
-                  wx.navigateTo({
-                    url: '../reg/reg',
+              wx.removeStorage({
+                key: 'userPhone',
+                success: function(res) {
+                  wx.showToast({
+                    title: '注销成功',
+                    icon: "success",
+                    duration: 1000,
+                    success: function () {
+                      wx.navigateTo({
+                        url: '../reg/reg',
+                      })
+                    }
                   })
-                }
+                },
               })
+              
             }
           })
              

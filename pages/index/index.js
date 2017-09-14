@@ -31,7 +31,9 @@ Page({
        let  latitude = res.latitude
        let longitude = res.longitude;
        let marker = this.createMarker(res);
-       console.log(latitude+','+longitude);
+       wx.setStorageSync('lng',longitude);
+       wx.setStorageSync('lat', latitude);
+     //  console.log(latitude+','+longitude);
        var markers=[];
        markers.push(marker);
 
@@ -40,7 +42,7 @@ Page({
        wx.getStorage({
          key: 'token',
          success: function(res) {
-        console.log(res.data);
+       // console.log(res.data);
            var url = "https://www.qinglibike.com/qlbike/bike/list/" + longitude + "/" + latitude + "/" + "0.007" + "/" + res.data;
            wx.request({
              method: 'GET',
@@ -49,11 +51,11 @@ Page({
                'Content-Type': 'application/json'
              },
              success: function (res) {
-               console.log(res)
+            //  console.log(res)
                if (res.data.status == 200) {
                 
                  var bikeArr=res.data.data;
-               console.log(bikeArr)
+             //  console.log(bikeArr)
                    for (var item in bikeArr) {
 
                      if (bikeArr[item].bikealert!= 0){
@@ -89,19 +91,19 @@ Page({
                   
                }else{
                  var cont=String(res.data.msg);
-                //  wx.showModal({
-                //    title: '提示',
-                //    content: cont,
-                //    showCancel:false,
-                //    success:function(res){
-                //           // wx.redirectTo({
-                //           //   url: '../reg/reg',
-                //           // })
-                //    },
-                //    fail:function(res){
+                 wx.showModal({
+                   title: '提示',
+                   content: cont,
+                   showCancel:false,
+                   success:function(res){
+                          wx.redirectTo({
+                            url: '../reg/reg',
+                          })
+                   },
+                   fail:function(res){
 
-                //    }
-                //  })
+                   }
+                 })
                }
 
              },
@@ -215,20 +217,28 @@ Page({
      
     };
       if (e.controlId == 2){
-        wx.redirectTo({
-          url: '../run/run',
-        })
+        
        
-        // wx.scanCode({
-        //   success: (res) => {
-        //     console.log(res)
-        //   },
-        //   fail: (res) => {
-        //     this.setData({
-        //       lockhidden: false
-        //     });
-        //   }
-        // })
+        wx.scanCode({
+          success: (res) => {
+            var bike_num=String(res.result).split('=')[1];
+            console.log(bike_num);
+           
+                wx.removeStorageSync('bikeId');
+                wx.setStorageSync('bikeId',bike_num);
+                wx.navigateTo({
+                  url: '../run/run',
+                })
+            
+              
+              
+          },
+          fail: (res) => {
+            this.setData({
+              lockhidden: false
+            });
+          }
+        })
       };
     //红包控件处理
       if(e.controlId == 4) {

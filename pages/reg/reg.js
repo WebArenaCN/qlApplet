@@ -44,7 +44,7 @@ Page({
           'Content-Type': 'application/json'
         },
         success: function (res) {
-          console.log(res.data.ret);
+        //  console.log(res.data.ret);
           that.setData({
             successIcon: true,
           })
@@ -60,7 +60,7 @@ Page({
               yzcode: 'ok',
            
             });
-            console.log(that)
+            //console.log(that)
           } else {
             wx.showModal({
               title: '提示',
@@ -96,7 +96,7 @@ Page({
         success: function (res) {
           if (res.data.status == '200') {
            var token = res.data.data;
-            console.log(res);
+          //  console.log(res);
             wx.setStorage({
               key: "token",
               data: token

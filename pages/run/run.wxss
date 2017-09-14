@@ -1,14 +1,12 @@
 .ql_run_map{
   width: 100%;
-  height: 80%;
+  height: 75%;
   position: absolute;
-  top: 19%;
+  top:24%;
   left: 0; 
-  
-
 }
 .ql-new {
-  border: 1px solid black;
+ 
   z-index: 100;
   width:100%;
   height: 100%;
@@ -18,21 +16,34 @@
   left:0rpx;
   box-shadow: 0 2px 5px #ccc;
 }
-
-.ql-new .ql_run>view{
-  border: 1px solid red;
+.ql_run{
+  width: 100%;
+  font-size: 14px;
+  
+}
+.ql_run>view{
+  line-height:35px;
   display: inline-block;
-  width:32%;
-  text-align: center;
-  line-height: 30px;
-  height: 30px;
+  width:44%;
+ 
+}
+.ql_wTime{
+  width: 44%;
+  
+}
+.ql_wTime view{
+padding-left:30%;
 }
 .sw1{
-  width: 35%;
-  text-align: end;
+  width: 44%;
+  
+}
+.sw1 view,.sw1 switch{
+ 
+  margin-left:50%;
 }
 .ql_tips{
-   border: 1px solid red;
+  
    width: 100%;
   text-align: center;
   font-size:1.5em;
