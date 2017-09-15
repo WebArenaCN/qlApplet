@@ -1,85 +1,131 @@
-.ql_run_map{
+.ql_run_map {
   width: 100%;
   height: 75%;
-  position: absolute;
-  top:24%;
-  left: 0; 
+  
 }
+
 .ql-new {
- 
   z-index: 100;
-  width:100%;
+  width: 100%;
   height: 100%;
   background-color: #eee;
-  position:fixed;
-  top:0rpx;
-  left:0rpx;
+  position: fixed;
+  top: 0rpx;
+  left: 0rpx;
   box-shadow: 0 2px 5px #ccc;
 }
-.ql_run{
+
+.ql_run {
   width: 100%;
   font-size: 14px;
-  
 }
-.ql_run>view{
-  line-height:35px;
+
+.ql_run>view {
+  line-height: 35px;
   display: inline-block;
-  width:44%;
- 
-}
-.ql_wTime{
   width: 44%;
-  
 }
-.ql_wTime view{
-padding-left:30%;
-}
-.sw1{
+
+.ql_wTime {
   width: 44%;
-  
 }
-.sw1 view,.sw1 switch{
- 
-  margin-left:50%;
+
+.ql_wTime view {
+  padding-left: 30%;
 }
-.ql_tips{
-  
-   width: 100%;
+
+.sw1 {
+  width: 44%;
+}
+
+.sw1 view, .sw1 switch {
+  margin-left: 50%;
+}
+
+.ql_tips {
+  width: 100%;
   text-align: center;
-  font-size:1.5em;
-  line-height:60px;
+  font-size: 1.5em;
+  line-height: 60px;
 }
-.ql_run{
-  
-  background-color:#EEE;
- height: 100px;
-  
+
+.ql_run {
+  background-color: #eee;
+  height: 100px;
 }
-.ql_run view,.ql_run text,.ql_run switch{
-  background: #EEE;
-  color: #ED9F30;
+
+.ql_run view, .ql_run text, .ql_run switch {
+  background: #eee;
+  color: #ed9f30;
 }
-.run_time_m,.run_time_min{
-  color: #ED9F30;
+
+.run_time_m, .run_time_min {
+  color: #ed9f30;
 }
-.bike_num{
-  color:#707070;
+
+.bike_num {
+  color: #707070;
 }
-.ql-new  .run_tit{
- color:#707070;
+
+.ql-new  .run_tit {
+  color: #707070;
 }
-.bike_tit{
-  color:#ED9F30;
+
+.bike_tit {
+  color: #ed9f30;
   padding-right: 10px;
 }
 
-.ql_scan{
-  background-color: #EEA235;
-  border-radius:40px;
+.ql_scan {
+  background-color: #eea235;
+  border-radius: 40px;
   position: fixed;
-  bottom:150rpx;
+  bottom: 150rpx;
   margin: 0 auto;
-  width:145px;
-  height:40px;
+  width: 145px;
+  height: 40px;
   z-index: 100;
+}
+
+.myToast {
+  width:60%;
+  border-radius: 20rpx;
+  background-color:#333;
+   text-align: center;
+   position: fixed;
+   
+   left: 20%;
+  margin:0 auto;
+  top:100px;
+  z-index: 100;
+  opacity: 0.85;
+  overflow: hidden;
+}
+.myToast .bikePwd{
+ 
+ line-height: 100px;
+   letter-spacing:10px;
+   font-weight:bold;
+   font-size:45px;
+  background-color: #333;
+  color:#fff;
+}
+.myToast .bikePwd_tips{
+  background-color: #333;
+  line-height: 30px;
+  color:#fff;
+   opacity: 0.85;
+   font-size:16px;
+   font-weight: bold;
+   font-family: '微软雅黑';
+ 
+}
+.myToast .bikePwd_tips2{
+  background-color: #333;
+  line-height:20px;
+  color:#fff;
+   opacity: 0.85;
+   font-size:13px;
+ font-family: '微软雅黑';
+   
 }

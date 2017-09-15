@@ -222,11 +222,12 @@ Page({
         wx.scanCode({
           success: (res) => {
             var bike_num=String(res.result).split('=')[1];
-            console.log(bike_num);
+            //console.log(bike_num);
            
                 wx.removeStorageSync('bikeId');
                 wx.setStorageSync('bikeId',bike_num);
-                wx.navigateTo({
+                wx.redirectTo({
+                
                   url: '../run/run',
                 })
             

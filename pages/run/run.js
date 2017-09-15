@@ -7,19 +7,35 @@ Page({
    * 页面的初始数据
    */
   data: {
+    mapH:'100%',
+    runModal_show:true,
+    nullHouse: false,
     scale: 18,
     latitude: 0,
     longitude: 0,
     bike_num:'',
     run_distance:'0',
     run_min:'0',
-    bikePwd:0
+    bikePwd:0,
+    bikeShow:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this;
+    wx.getStorage({
+      key: 'token',
+      success: function(res) {
+        var bikeId=wx.getStorageSync('bikeId');
+         that.setData({
+           bikeId:bikeId
+         })
+      },
+    })
+    setInterval(this.checkBikeStatus,5000);
+    //this.checkBikeStatus();
     let lati = wx.getStorageSync('lat');
     let lng = wx.getStorageSync('lng');
     this.setData({
@@ -38,7 +54,7 @@ Page({
    */
   onReady: function () {
     var bikeId = wx.getStorageSync('bikeId');
-    console.log(bikeId);
+    //console.log(bikeId);
     this.getBikePwd(bikeId);
   },
 
@@ -48,6 +64,7 @@ Page({
   onShow: function () {
   
   },
+ 
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -100,10 +117,13 @@ Page({
             "Content-Type":'application/json'
           },
           success:function(res){
-             console.log(res);
+          
              if(res.data.status==200){
                  console.log(res.data.data);
+           
+             //    that.clickArea();
                  that.setData({
+                   bikeShow: res.data.data,
                    bikePwd:res.data.data
                  })
              }else{
@@ -114,6 +134,7 @@ Page({
                  showCancel:false,
                  success:function(res){
                    if(res.confirm){
+                     
                      console.log('点击了确定');
                      wx.navigateBack({
                        
@@ -131,6 +152,101 @@ Page({
       },
     })
     
-  }
-})
+  },
+  // clickArea: function () {
+  //   var that = this; 
+  //   this.setData({
+  //     nullHouse: false,  //弹窗显示  
+  //      });
+  // }, 
 
+   //检验自行车状态
+  checkBikeStatus(){
+    var that = this;
+    var bike_nowTime = Date.parse(new Date()) / 1000;
+    // console.log(bike_startTime);
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        var token = res.data;
+        var url = "https://www.qinglibike.com/qlbike/user/token/" + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type": "application/json"
+          },
+          success: function (res) {
+         //   var time =Number(bike_startTime)-Number(res.data.data.usebiketime);
+        
+            var user_startTime=res.data.data.usebiketime;//用户骑行开始时间
+            if (res.data.data.usebiketime==0){
+                    console.log('没有骑行');
+                    
+                   
+            }else{
+              var runTime = Math.round((bike_nowTime - res.data.data.usebiketime)/60);
+              console.log(runTime);
+              that.setData({
+                run_min:runTime,
+              })
+              setTimeout(that.closePwdWindow,5000);
+            }
+          },
+          fail: function (res) {
+
+          },
+        });
+
+      },
+      fail: function () {
+        wx.showModal({
+          title: '提示',
+        })
+      }
+    })
+  },
+  checkBikeStatus1() {
+    var that=this;
+    var bike_startTime=Date.parse(new Date())/1000;
+    // console.log(bike_startTime);
+    wx.getStorage({
+      key: 'token',
+      success: function(res) {
+        var token = res.data;
+        var url ="https://www.qinglibike.com/qlbike/user/finish/" + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type":"application/json"
+          },
+          success: function (res) {
+          
+            console.log(res)
+          },
+          fail:function(res){
+
+          },
+        });
+
+      },
+      fail:function(){
+        wx.showModal({
+          title: '提示',
+        })
+      }
+    })
+   
+  },
+  //关闭密码窗口
+  closePwdWindow(){
+    this.setData({
+      mapH:'70%',
+      nullHouse:true,
+      runModal_show:false
+    })
+  }
+
+
+})

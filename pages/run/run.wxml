@@ -1,9 +1,10 @@
 <!--pages/run/run.wxml-->
  <!--newm模块-->
   <view class="ql-new">
-    <view class='ql_tips'>
+  <view  hidden='{{runModal_show}}'>
+   <view class='ql_tips'>
         <text class='bike_tit'>骑行中</text>
-        <text class='bike_num'>{{bikePwd}}</text>
+        <text class='bike_num'>{{bikeId}}</text>
     </view>
     <view class='ql_run'>
       <view class='ql_wTime'>
@@ -19,5 +20,16 @@
         <switch checked='{{shut_mid}}' ></switch>
       </view>
     </view>
-     <map class='ql_run_map' scale='{{scale}}' show-location='true' longitude='{{longitude}}' latitude='{{latitude}}'></map>
+  </view>
+   
+     <map style='height:{{mapH}}' class='ql_run_map' scale='{{scale}}' show-location='true' longitude='{{longitude}}' latitude='{{latitude}}'></map>
+     <view class="myToast" hidden="{{nullHouse}}">
+       
+        <view class='bikePwd_tips'>解锁码是：</view>
+          <view class='bikePwd_tips2'>（解锁后5秒自动关闭）</view> 
+        <view class='bikePwd'>
+              {{bikeShow}}
+       </view>
+        
+     </view> 
   </view>
