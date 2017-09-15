@@ -202,43 +202,13 @@ Page({
       fail: function () {
         wx.showModal({
           title: '提示',
+          content:'',
+
         })
       }
     })
   },
-  checkBikeStatus1() {
-    var that=this;
-    var bike_startTime=Date.parse(new Date())/1000;
-    // console.log(bike_startTime);
-    wx.getStorage({
-      key: 'token',
-      success: function(res) {
-        var token = res.data;
-        var url ="https://www.qinglibike.com/qlbike/user/finish/" + token;
-        wx.request({
-          method: "GET",
-          url: url,
-          header: {
-            "Content-Type":"application/json"
-          },
-          success: function (res) {
-          
-            console.log(res)
-          },
-          fail:function(res){
-
-          },
-        });
-
-      },
-      fail:function(){
-        wx.showModal({
-          title: '提示',
-        })
-      }
-    })
-   
-  },
+ 
   //关闭密码窗口
   closePwdWindow(){
     this.setData({
