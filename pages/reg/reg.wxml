@@ -7,6 +7,7 @@
 
     <div class="weui-cells weui-cells_form">
       <form bindsubmit="getcodeform">
+      <!-- <view class='form_tit'>用户登录</view> -->
         <div class="weui-cell weui-cell_vcode">
           <div class="weui-cell__hd">
             <label class="weui-label">手机号</label>

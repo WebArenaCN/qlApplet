@@ -96,9 +96,9 @@ Page({
                    content: cont,
                    showCancel:false,
                    success:function(res){
-                          wx.redirectTo({
-                            url: '../reg/reg',
-                          })
+                          // wx.redirectTo({
+                          //   url: '../reg/reg',
+                          // })
                    },
                    fail:function(res){
 
@@ -154,9 +154,9 @@ Page({
             iconPath:"/images/focus.png",
             position:{
               left:10,
-              top:res.windowHeight-65,
-              width:45,
-              height:45
+              top:res.windowHeight-75,
+              width:55,
+              height:55
             },
             clickable:true
           }, {
@@ -173,24 +173,24 @@ Page({
             id:3,
             iconPath:"/images/user.png",
             position:{
-              left:res.windowWidth-50,
-              top:res.windowHeight-60,
-              width:30,
-              height:30
+              left:res.windowWidth-53,
+              top:res.windowHeight-65,
+              width:37,
+              height:37
             },
             clickable:true
-          },
-          {
-            id: 4,
-            iconPath: "/images/wallet.png",
-            position: {
-              left: res.windowWidth - 53,
-              top: res.windowHeight - 110,
-              width:40,
-              height:40
-            },
-            clickable: true
-          },
+         },
+          // {
+          //   id: 4,
+          //   iconPath: "/images/wallet.png",
+          //   position: {
+          //     left: res.windowWidth - 53,
+          //     top: res.windowHeight - 110,
+          //     width:40,
+          //     height:40
+          //   },
+          //   clickable: true
+          // },
           ]
         })
       },
@@ -253,17 +253,23 @@ Page({
        wx.getStorage({
          key: 'token',
          success: function(res) {
-            console.log(res);
+            // console.log(res);
             wx.navigateTo({
-              url: '../recharge/recharge'
+              url: '../you/you'
             })
          },
          fail:function(){
            wx.showModal({
-             title: '你还未登录！',
-             content: '',
+             title: '提示',
+             content: '请先登录',
              showCancel: false,
-
+             success:function(res){
+               if(res.confirm){
+                 wx.navigateTo({
+                   url: '../reg/reg'
+                 })
+               }
+             }
            })
          }
        })

@@ -1,0 +1,47 @@
+<!--pages/you/you.wxml-->
+
+
+
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" click='true'> 获取头像昵称 </button>
+    <view class='user_shelter' wx:else>
+      <image bindtap="bindViewTap" class="userinfo_avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo_nickname">{{userInfo.nickName}}</text>
+      <text class="userinfo_phone">{{userPhone}}</text>
+      <view class="userinfo_score">
+        <label>信用积分 </label>
+        <text class='userinfo_score_1'>{{credit_score}}</text>
+
+      </view>
+
+    </view>
+    <view class='menu'>
+      <view class='menu_item'>
+        <image src='../../images/route.png'></image>
+        <view>我的行程</view>
+      </view>
+      <view class='menu_item'>
+        <image src='../../images/walle.png'></image>
+        <view>我的钱包</view>
+      </view>
+      <view class='menu_item'>
+       <image src='../../images/invite.png'></image>
+        <view>邀请好友</view>
+      </view>
+      <view class='menu_item'>
+       <image src='../../images/feedback.png'></image>
+        <view>问题反馈</view>
+      </view>
+      <view class='menu_item'>
+        <image src='../../images/park.png'></image>
+        <view>中途停车</view>
+      </view>
+      <view class='menu_item'>
+       <image src='../../images/setting.png'></image>
+        <view>设置</view>
+      </view>
+    </view>
+  </view>
+
+</view>
