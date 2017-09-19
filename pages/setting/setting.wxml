@@ -1,0 +1,13 @@
+<!--pages/setting/setting.wxml-->
+ <view class='menu'>
+     
+      <navigator url='../service/service' class='menu_item'>
+        <image src='../../images/walle.png'></image>
+        <view>隐私协议</view>
+      </navigator>
+      <navigator url='../about/about'  class='menu_item '>
+       <image src='../../images/invite.png'></image>
+        <view>关于我们</view>
+      </navigator>
+      
+    </view>

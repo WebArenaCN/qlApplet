@@ -21,7 +21,7 @@ Page({
  },
 
   onLoad: function (options) {
-  
+    wx.setStorageSync('vicLogin', 'fail');
    this.timer=options.timer;
    var that=this;
     // 获取当前经纬度
@@ -53,7 +53,7 @@ Page({
              success: function (res) {
             //  console.log(res)
                if (res.data.status == 200) {
-                
+               wx.setStorageSync('vicLogin','success');
                  var bikeArr=res.data.data;
              //  console.log(bikeArr)
                    for (var item in bikeArr) {
@@ -90,6 +90,7 @@ Page({
 
                   
                }else{
+                 wx.setStorageSync('vicLogin', 'fail');
                  var cont=String(res.data.msg);
                  wx.showModal({
                    title: '提示',
@@ -174,7 +175,7 @@ Page({
             iconPath:"/images/user.png",
             position:{
               left:res.windowWidth-53,
-              top:res.windowHeight-65,
+              top:res.windowHeight-67,
               width:37,
               height:37
             },

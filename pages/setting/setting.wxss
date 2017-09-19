@@ -1,0 +1,33 @@
+/* pages/setting/setting.wxss */
+.menu{
+ 
+  height: 100%;
+  background-color: #fff;
+  margin: 0;
+  padding:10px 20px;
+}
+
+.menu_item{
+  width:98%;
+  border-bottom: 1px solid #eee;
+  line-height:40px;
+  margin: 0 auto;
+ 
+}
+
+.menu_item view{
+  
+  font-family: '思源黑体';
+  font-size:17px;
+  letter-spacing: 1px;
+  
+}
+
+.menu_item image{
+  display: none;
+  margin-right: 10px;
+  width:28px;
+  height:28px;
+  vertical-align: middle;
+ 
+}

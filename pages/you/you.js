@@ -57,10 +57,28 @@ Page({
       hasUserInfo: true
     })
   },
+
   //单独方法
 
 //1.隐藏手机号
 hidePhone(phone){
   return String(phone).substr(0,3)+'****'+String(phone).substr(7);
-}
+},
+  onShareAppMessage: function (res) {
+    console.log(res.from);
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
 })

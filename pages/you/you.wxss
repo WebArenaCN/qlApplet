@@ -58,8 +58,9 @@
   overflow: hidden;
    padding:10px 0;
 }
-.menu_item{
 
+.menu_item{
+  background-color: #fff;
   line-height:48px;
   display: flex;
  
@@ -67,15 +68,25 @@
   margin: 0 auto;
 
 }
-.menu_item view{
-  font-family: '思源黑体';
-  font-size:17px;
-  letter-spacing: 2px;
+.invite_frd{
+  padding: 0;
+  border:2px solid green;
+  background-color: #fff;
   
 }
+.menu_item view{
+  
+  font-family: '思源黑体';
+  font-size:17px;
+  letter-spacing: 1px;
+  background-color: #fff;
+}
+.menu button{
+ border:2px solid #fff;
+}
 .menu_item image{
+  
   margin-right: 10px;
- 
   width:28px;
   height:28px;
   vertical-align: middle;

@@ -12,6 +12,7 @@ Page({
     curIndex: 0,
     cart: [],
     cartTotal: 0,
+    showClearBtn:true,
     lockhidden: true,
     yajinhidden: true,
     sucmoney:0,
@@ -112,6 +113,14 @@ Page({
   },
   //页面加载模块
   onLoad: function () {
+    var that=this;
+   if(wx.getStorageSync('vicLogin')=='success'){
+     this.setData({
+       showClearBtn:false,
+     })
+   }else{
+     
+   }
     b = 0;
     this.setData({
       mymoney: money,

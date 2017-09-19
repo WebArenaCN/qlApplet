@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/reg/reg",
     "pages/recharge/recharge",
-    "pages/hongbao/hongbao",
+    "pages/about/about",
+    "pages/setting/setting",
     "pages/service/service",
     "pages/run/run",
     "pages/you/you"

@@ -63,4 +63,4 @@
 
 
 </modal>
-<button class="clearStorage" hidden="{{showReg}}" bindtap="clearStorage">注销</button>
+<button class="clearStorage" hidden="{{showClearBtn}}" bindtap="clearStorage">注销</button>

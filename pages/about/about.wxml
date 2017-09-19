@@ -1,0 +1,27 @@
+
+      <view class='logo'>
+        <image src='../../images/bikelogo.png'></image>
+        <view class='logo_text'>
+          轻力单车
+        </view>
+      </view>
+ <view class='menu'>
+      
+      <navigator  class='menu_item'>
+        <view class='item_l'>微信公众号</view>
+        <view class='item_r'>轻力单车</view>
+      </navigator>
+      <navigator   class='menu_item '>
+      <view class='item_l'>官方微博</view>
+        <view class='item_r'>轻力单车</view>
+      </navigator>
+      <navigator  class='menu_item'>
+       <view class='item_l'>官方网站</view>
+        <view class='item_r'>www..qinglibike.com</view>
+      </navigator>
+      <navigator   class='menu_item '>
+      <view class='item_l'>客服热线</view>
+        <view class='item_r'>400 699 9392</view>
+      </navigator>
+      
+    </view>
