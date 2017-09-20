@@ -12,6 +12,8 @@ Page({
     showModalStatus: false,
     showReg:true,
     circles:[],
+    bikeShow:'0000',
+    nullHouse:true
     
   },
 
@@ -21,6 +23,7 @@ Page({
  },
 
   onLoad: function (options) {
+    this.checkBikeStart();
     wx.setStorageSync('vicLogin', 'fail');
    this.timer=options.timer;
    var that=this;
@@ -91,15 +94,20 @@ Page({
                   
                }else{
                  wx.setStorageSync('vicLogin', 'fail');
+               
                  var cont=String(res.data.msg);
+                 if(cont==undefined){
+                   var cont='重新登录'
+                 }
+                 console.log(cont)
                  wx.showModal({
                    title: '提示',
-                   content: cont,
+                   content:cont,
                    showCancel:false,
                    success:function(res){
-                          // wx.redirectTo({
-                          //   url: '../reg/reg',
-                          // })
+                          wx.redirectTo({
+                            url: '../reg/reg',
+                          })
                    },
                    fail:function(res){
 
@@ -222,23 +230,28 @@ Page({
        
         wx.scanCode({
           success: (res) => {
+            
+            console.log(res);
             var bike_num=String(res.result).split('=')[1];
-            //console.log(bike_num);
-           
-                wx.removeStorageSync('bikeId');
+            this.getBikePwd(bike_num);
+           console.log(bike_num);
+           wx.removeStorageSync('bikeId');
                 wx.setStorageSync('bikeId',bike_num);
-                wx.redirectTo({
+         
                 
-                  url: '../run/run',
-                })
+              
             
               
               
           },
           fail: (res) => {
-            this.setData({
-              lockhidden: false
-            });
+            wx.showModal({
+              title: '提示',
+              content: '扫码出错',
+              showCancel:false,
+
+            })
+            
           }
         })
       };
@@ -295,17 +308,121 @@ Page({
       }
     })
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
+
+  //检验自行车状态
+  checkBikeStart() {
+    var that = this;
+    var bike_nowTime = Date.parse(new Date()) / 1000;
+    // console.log(bike_startTime);
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        var token = res.data;
+        var url = "https://www.qinglibike.com/qlbike/user/token/" + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type": "application/json"
+          },
+          success: function (res) {
+            //   var time =Number(bike_startTime)-Number(res.data.data.usebiketime);
+
+            var user_startTime = res.data.data.usebiketime;//用户骑行开始时间
+            if (res.data.data.usebiketime == 0) {
+                console.log('没有骑行');
+
+
+            } else {
+              // var runTime = Math.round((bike_nowTime - user_startTime) / 60);
+              // var checkOver = res.data.data.usebiketime;
+
+              // console.log(runTime);
+              // that.setData({
+              //   run_min: runTime,
+              // })
+              that.setData({
+                nullHouse:true,
+                //bikeShow: res.data.data,
+
+              })
+             
+               wx.redirectTo({
+                 url: '../run/run',
+               });
+
+
+
+            }
+          },
+          fail: function (res) {
+
+          },
+        });
+
+      },
+      fail: function () {
+        wx.showModal({
+          title: '提示',
+          content: '',
+
+        })
+      }
     })
   },
-  // 扫码开锁弹出层显示隐藏
-  confirm: function () {
-    this.setData({
-      lockhidden: true
-    });
+
+
+  //获取车辆密码
+  getBikePwd: function (bikeId) {
+    var that = this;
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        var token = res.data;
+        console.log(token);
+        var url = "https://www.qinglibike.com/qlbike/bike/pwd/" + bikeId + '/' + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type": 'application/json'
+          },
+          success: function (res) {
+
+            if (res.data.status == 200) {
+              console.log(res.data);
+           that.setData({
+                nullHouse: false,
+                bikeShow: res.data.data,
+               
+              })
+            } else if (res.data.status == 400) {
+              var tips = res.data.msg;
+              
+              wx.showModal({
+                title: '提示',
+                content: tips,
+                showCancel: false,
+                success: function (res) {
+                  if (res.confirm) {
+
+                    console.log('点击了确定');
+                    wx.navigateBack({
+
+                    })
+                  }
+                }
+              })
+            }
+          },
+          fail: function (res) {
+
+          }
+        })
+
+      },
+    })
+
   },
 
   createMarker(point){

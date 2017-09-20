@@ -13,7 +13,7 @@
    <view class="ql-new" hidden="{{runhidden}}">
     <view class='ql_tips'>
         <text class='bike_tit'>骑行中</text>
-        <text class='bike_num'>256892</text>
+        <text class='bike_num'>000000</text>
     </view>
     <view class='ql_run'>
       <view class=''>
@@ -34,7 +34,15 @@
     </view>
 
   </view>
-  
+      <view class="myToast" hidden="{{nullHouse}}">
+       
+        <view class='bikePwd_tips'>解锁码是：</view>
+          <view class='bikePwd_tips2'>（解锁后5秒自动关闭）</view> 
+        <view class='bikePwd'>
+              {{bikeShow}}
+       </view>
+        
+     </view> 
 
 
 

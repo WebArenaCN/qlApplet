@@ -29,6 +29,9 @@
 .ql_wTime {
   width: 44%;
 }
+.top_view{
+  height:27%;
+}
 
 .ql_wTime view {
   padding-left: 30%;
@@ -47,11 +50,13 @@
   text-align: center;
   font-size: 1.5em;
   line-height: 60px;
+  height:35%;
+  overflow: hidden;
 }
 
 .ql_run {
   background-color: #eee;
-  height: 100px;
+  height: 70%;
 }
 
 .ql_run view, .ql_run text, .ql_run switch {
@@ -76,16 +81,7 @@
   padding-right: 10px;
 }
 
-.ql_scan {
-  background-color: #eea235;
-  border-radius: 40px;
-  position: fixed;
-  bottom: 150rpx;
-  margin: 0 auto;
-  width: 145px;
-  height: 40px;
-  z-index: 100;
-}
+
 
 .myToast {
   width:60%;

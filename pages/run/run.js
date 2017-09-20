@@ -7,8 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    mapH:'100%',
-    runModal_show:true,
+    
+    runModal_show:false,
     nullHouse: false,
     scale: 18,
     latitude: 0,
@@ -16,8 +16,8 @@ Page({
     bike_num:'',
     run_distance:'0',
     run_min:'0',
-    bikePwd:0,
-    bikeShow:''
+    bikeShow:'',
+    bikeShutDown:false,
   },
 
   /**
@@ -34,7 +34,7 @@ Page({
          })
       },
     })
-    setInterval(this.checkBikeStatus,5000);
+   setInterval(this.checkBikeStatus,5000);
     //this.checkBikeStatus();
     let lati = wx.getStorageSync('lat');
     let lng = wx.getStorageSync('lng');
@@ -53,9 +53,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var bikeId = wx.getStorageSync('bikeId');
-    //console.log(bikeId);
-    this.getBikePwd(bikeId);
+    // var bikeId = wx.getStorageSync('bikeId');
+    // //console.log(bikeId);
+    // this.getBikePwd(bikeId);
   },
 
   /**
@@ -119,26 +119,24 @@ Page({
           success:function(res){
           
              if(res.data.status==200){
-                 console.log(res.data.data);
+                 console.log(res.data);
            
-             //    that.clickArea();
+       
                  that.setData({
                    bikeShow: res.data.data,
-                   bikePwd:res.data.data
+                 
                  })
              }else{
                var tips=res.data.msg;
                wx.showModal({
                  title: '提示',
-                 content:tips,
+                 content:'获取密码失败请稍后重试',
                  showCancel:false,
                  success:function(res){
                    if(res.confirm){
                      
                      console.log('点击了确定');
-                     wx.navigateBack({
-                       
-                     })
+                     
                    }
                  }
                })
@@ -181,16 +179,23 @@ Page({
         
             var user_startTime=res.data.data.usebiketime;//用户骑行开始时间
             if (res.data.data.usebiketime==0){
-                    console.log('没有骑行');
-                    
+                   // console.log('没有骑行');
+                  wx.navigateTo({
+                    url: '../over/over',
+                  })
                    
             }else{
-              var runTime = Math.round((bike_nowTime - res.data.data.usebiketime)/60);
-              console.log(runTime);
-              that.setData({
-                run_min:runTime,
-              })
-              setTimeout(that.closePwdWindow,5000);
+                 var runTime = Math.round((bike_nowTime - user_startTime) / 60);
+                 var checkOver = res.data.data.usebiketime;
+              
+                  console.log(runTime);
+                  that.setData({
+                    run_min: runTime,
+                  })
+               //  setTimeout(that.closePwdWindow,1000);
+                
+               
+            
             }
           },
           fail: function (res) {
@@ -208,6 +213,11 @@ Page({
       }
     })
   },
+
+
+
+
+  
  
   //关闭密码窗口
   closePwdWindow(){
