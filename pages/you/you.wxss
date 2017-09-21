@@ -92,3 +92,8 @@
   vertical-align: middle;
   margin-top:10px; 
 }
+.clearStorage{
+  margin-top:50px;
+  width: 85%;
+  
+}

@@ -17,7 +17,7 @@
 
       <view class='sw1'>
         <view class='run_tit '>中途停车</view>
-        <switch checked='{{shut_mid}}'></switch>
+        <switch bindchange='midStop' checked='{{shut_mid}}'></switch>
       </view>
     </view>
   </view>

@@ -41,6 +41,7 @@
        <image src='../../images/setting.png'></image>
         <view>设置</view>
       </navigator>
+       <button class="clearStorage" type='primary' hidden="{{showClearBtn}}" bindtap="clearStorage">注销</button>
     </view>
   </view>
 

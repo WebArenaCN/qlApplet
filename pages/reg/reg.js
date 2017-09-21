@@ -44,7 +44,7 @@ Page({
           'Content-Type': 'application/json'
         },
         success: function (res) {
-        //  console.log(res.data.ret);
+         console.log(res.data.ret);
           that.setData({
             successIcon: true,
           })

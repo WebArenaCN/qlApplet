@@ -1,0 +1,25 @@
+
+      <view class='logo'>
+        <image src='../../images/overLogo.png'></image>
+        
+      </view>
+ <view class='menu'>
+      
+      <view  class='menu_item'>
+        <view class='item_l'>骑行时间</view>
+        <view class='item_r'>
+          <text>{{rideTime}}</text>
+        </view>
+      </view>
+      <view   class='menu_item '>
+      <view class='item_l'>骑行费用</view>
+        <view class='item_r'>
+           <text>{{pay}}</text>
+        </view>
+      </view>
+      
+    
+    </view>
+      <view   class='menu_item1 '>
+        <button bindtap='goHome' type='primary' >返回首页</button>
+      </view>

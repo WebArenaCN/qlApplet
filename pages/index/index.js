@@ -13,8 +13,10 @@ Page({
     showReg:true,
     circles:[],
     bikeShow:'0000',
-    nullHouse:true
-    
+    nullHouse:true,
+    scanGet:false,
+    loadGet:true,
+
   },
 
   
@@ -22,10 +24,17 @@ Page({
    this.mapCtx = wx.createMapContext('mymap')
  },
 
-  onLoad: function (options) {
-    this.checkBikeStart();
+  onLoad: function () {
+    if(this.data.loadGet){
+      console.log('加载了');
+          this.checkBikeStart();
+    }else{
+      console.log('扫码了')
+      setInterval(this.checkBikeStart,5000);
+    }
+   
     wx.setStorageSync('vicLogin', 'fail');
-   this.timer=options.timer;
+  
    var that=this;
     // 获取当前经纬度
     wx.getLocation({
@@ -231,13 +240,16 @@ Page({
         wx.scanCode({
           success: (res) => {
             
-            console.log(res);
+           //车牌号对象   console.log(res);
             var bike_num=String(res.result).split('=')[1];
             this.getBikePwd(bike_num);
-           console.log(bike_num);
+          //车牌号    console.log(bike_num);
            wx.removeStorageSync('bikeId');
                 wx.setStorageSync('bikeId',bike_num);
-         
+           this.setData({
+             loadGet:false
+           })
+           return this.onLoad();
                 
               
             
@@ -303,8 +315,8 @@ Page({
   getCenterLocation: function (){
     this.mapCtx.getCenterLocation({
       success: function (res) {
-        console.log(res.longitude)
-        console.log(res.latitude)
+      //  console.log(res.longitude)
+        //console.log(res.latitude)
       }
     })
   },
@@ -326,14 +338,16 @@ Page({
             "Content-Type": "application/json"
           },
           success: function (res) {
-            //   var time =Number(bike_startTime)-Number(res.data.data.usebiketime);
+      //  console.log(res);
+
+          if (res.data.status == 200) {
 
             var user_startTime = res.data.data.usebiketime;//用户骑行开始时间
             if (res.data.data.usebiketime == 0) {
-                console.log('没有骑行');
+              console.log('没有骑行');
 
 
-            } else {
+            } else if (res.data.data.usebiketime > 0) {
               // var runTime = Math.round((bike_nowTime - user_startTime) / 60);
               // var checkOver = res.data.data.usebiketime;
 
@@ -342,18 +356,24 @@ Page({
               //   run_min: runTime,
               // })
               that.setData({
-                nullHouse:true,
+                nullHouse: true,
                 //bikeShow: res.data.data,
 
               })
-             
-               wx.redirectTo({
-                 url: '../run/run',
-               });
+
+              wx.redirectTo({
+                url: '../run/run',
+              });
 
 
 
             }
+
+
+          } else {
+           
+          }
+           
           },
           fail: function (res) {
 
@@ -362,11 +382,7 @@ Page({
 
       },
       fail: function () {
-        wx.showModal({
-          title: '提示',
-          content: '',
-
-        })
+      
       }
     })
   },
@@ -379,7 +395,7 @@ Page({
       key: 'token',
       success: function (res) {
         var token = res.data;
-        console.log(token);
+     //   console.log(token);
         var url = "https://www.qinglibike.com/qlbike/bike/pwd/" + bikeId + '/' + token;
         wx.request({
           method: "GET",
@@ -390,11 +406,23 @@ Page({
           success: function (res) {
 
             if (res.data.status == 200) {
-              console.log(res.data);
+          //    console.log(res.data);
            that.setData({
-                nullHouse: false,
+                nullHouse:true,
                 bikeShow: res.data.data,
                
+              });
+           var pwd = res.data.data;
+              wx.showModal({
+                title: pwd,
+                content: '解锁码',
+                showCancel:false,
+                success:function(res){
+                  if(res.confirm){
+
+                  }else if(res.cancel){}
+                }
+                
               })
             } else if (res.data.status == 400) {
               var tips = res.data.msg;

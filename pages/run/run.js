@@ -34,7 +34,7 @@ Page({
          })
       },
     })
-   setInterval(this.checkBikeStatus,5000);
+   setInterval(this.checkBikeStatus,10000);
     //this.checkBikeStatus();
     let lati = wx.getStorageSync('lat');
     let lng = wx.getStorageSync('lng');
@@ -47,6 +47,62 @@ Page({
    
   },
 
+
+
+//中途停车
+  midStop:function(e){
+    var that=this;
+    if(e.detail.value){
+      wx.getStorage({
+        key: 'token',
+        success: function (res) {
+          var token = res.data;
+          console.log(token);
+          var bikeId=wx.getStorageSync('bikeId');
+          var url = "https://www.qinglibike.com/qlbike/bike/stopbike/" + bikeId + '/' + token;
+          wx.request({
+            method: "GET",
+            url: url,
+            header: {
+              "Content-Type": 'application/json'
+            },
+            success: function (res) {
+
+              if (res.data.status == 200) {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+
+                that.setData({
+                  bikeShow: res.data.data,
+
+                })
+              } else if (res.data.status == 400){
+                var tips = res.data.msg;
+                wx.showModal({
+                  title: '提示',
+                  content: '停车失败',
+                  showCancel: false,
+                  success: function (res) {
+                    if (res.confirm) {
+
+                    
+                    }
+                  }
+                })
+              }
+            },
+            fail: function (res) {
+
+            }
+          })
+
+        },
+      })
+    };
+  },
 
 
   /**
@@ -62,7 +118,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+     
   },
  
 
@@ -175,28 +231,41 @@ Page({
             "Content-Type": "application/json"
           },
           success: function (res) {
-         //   var time =Number(bike_startTime)-Number(res.data.data.usebiketime);
         
-            var user_startTime=res.data.data.usebiketime;//用户骑行开始时间
-            if (res.data.data.usebiketime==0){
-                   // console.log('没有骑行');
-                  wx.navigateTo({
-                    url: '../over/over',
-                  })
-                   
-            }else{
-                 var runTime = Math.round((bike_nowTime - user_startTime) / 60);
-                 var checkOver = res.data.data.usebiketime;
-              
-                  console.log(runTime);
-                  that.setData({
-                    run_min: runTime,
-                  })
-               //  setTimeout(that.closePwdWindow,1000);
-                
-               
-            
+            if (res.data.status == 200) {
+
+              var user_startTime = res.data.data.usebiketime;//用户骑行开始时间
+              if (user_startTime == 0) {
+                // console.log('没有骑行');
+                wx.navigateTo({
+                  url: '../over/over',
+                })
+
+              } else if (user_startTime > 0) {
+                // console.log(user_startTime);
+                var runTime = Math.round((bike_nowTime - user_startTime) / 60);
+                var checkOver = res.data.data.usebiketime;
+
+                console.log(runTime);
+                that.setData({
+                  run_min: runTime,
+                })
+                //  setTimeout(that.closePwdWindow,1000);
+
+
+
+              }
+
+            } else {
+              wx.showLoading({
+                title: '加载出错',
+              })
+
+              setTimeout(function () {
+                wx.hideLoading()
+              }, 1500)
             }
+        
           },
           fail: function (res) {
 
@@ -205,11 +274,7 @@ Page({
 
       },
       fail: function () {
-        wx.showModal({
-          title: '提示',
-          content:'',
-
-        })
+       
       }
     })
   },

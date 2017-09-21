@@ -65,56 +65,12 @@ Page({
       curIndex: index,
     })
   },
-  //注销
-  clearStorage:function(){
-    wx.showModal({
-      title: '提示',
-      content: '确定要注销么?',
-      success: function (res) {
-        if(res.confirm){
-          wx.removeStorage({
-            key: 'token',
-            success: function (res) {
-              wx.removeStorage({
-                key: 'userPhone',
-                success: function(res) {
-                  wx.showToast({
-                    title: '注销成功',
-                    icon: "success",
-                    duration: 1000,
-                    success: function () {
-                      wx.navigateTo({
-                        url: '../reg/reg',
-                      })
-                    }
-                  })
-                },
-              })
-              
-            }
-          })
-             
-        
-         
-        }else{
-          wx.showToast({
-              title: '注销失败',
-              icon: "loading",
-              duration: 1000,
-              success: function () {
-
-              }
-            })
-        }
-     
-      }
-    })
-  
-  },
+ 
   //页面加载模块
   onLoad: function () {
     var that=this;
    if(wx.getStorageSync('vicLogin')=='success'){
+     this.getUserBikeinfo();
      this.setData({
        showClearBtn:false,
      })
@@ -184,5 +140,48 @@ Page({
     this.setData({
       nocancel: true,
     });   
+  },
+
+
+  getUserBikeinfo() {
+    var that = this;
+    var bike_nowTime = Date.parse(new Date()) / 1000;
+    // console.log(bike_startTime);
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        var token = res.data;
+        var url = "https://www.qinglibike.com/qlbike/user/token/" + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type": "application/json"
+          },
+          success: function (res) {
+
+            if (res.data.status == 200) {
+console.log(res);
+              that.setData({
+                mymoney:res.data.data.usermoney,
+               
+              })
+
+
+
+            } else {
+             
+            }
+          },
+          fail: function (res) {
+
+          },
+        });
+
+      },
+      fail: function () {
+
+      }
+    })
   }
 })

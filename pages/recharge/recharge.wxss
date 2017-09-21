@@ -93,12 +93,5 @@
   background-color: #EEA200;
   border: 1px solid #EEA200;
 }
-.clearStorage{
-  display: inline-block;
-  width:88%;
-  margin-left:6%;
- background-color: #EEA200;
- color: #fff;
-}
 
 

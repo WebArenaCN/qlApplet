@@ -4,24 +4,23 @@ const app = getApp()
 
 Page({
   data: {
-    userPhone:'13523450460',
-    credit_score: '100',
+    userPhone:'',
+    credit_score: '',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
   bindViewTap: function () {
-
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+  console.log('点击头像')
   },
   onLoad: function () {
+    this.pay();
     var phone=this.hidePhone(this.data.userPhone);
     this.setData({
       userPhone:phone,
     })
+    this.getUserBikeinfo();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -65,7 +64,7 @@ hidePhone(phone){
   return String(phone).substr(0,3)+'****'+String(phone).substr(7);
 },
   onShareAppMessage: function (res) {
-    console.log(res.from);
+   // console.log(res.from);
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
@@ -80,5 +79,88 @@ hidePhone(phone){
         // 转发失败
       }
     }
+  },
+  getUserBikeinfo(){
+    var that = this;
+    var bike_nowTime = Date.parse(new Date()) / 1000;
+    // console.log(bike_startTime);
+    wx.getStorage({
+      key: 'token',
+      success: function (res) {
+        var token = res.data;
+        var url = "https://www.qinglibike.com/qlbike/user/token/" + token;
+        wx.request({
+          method: "GET",
+          url: url,
+          header: {
+            "Content-Type": "application/json"
+          },
+          success: function (res) {
+           
+        if(res.data.status==200){
+          
+         that.setData({
+           credit_score: res.data.data.userscore,
+           userPhone:that.hidePhone(res.data.data.userphone),
+         })
+            
+
+          
+        }else{
+          
+        }
+          },
+          fail: function (res) {
+
+          },
+        });
+
+      },
+      fail: function () {
+
+      }
+    })
+  },
+  //注销
+  clearStorage: function () {
+    wx.showModal({
+      title: '提示',
+      content: '确定要注销么?',
+      success: function (res) {
+        if (res.confirm) {
+          wx.removeStorage({
+            key: 'token',
+            success: function (res) {
+              wx.removeStorage({
+                key: 'userPhone',
+                success: function (res) {
+                  wx.showToast({
+                    title: '注销成功',
+                    icon: "success",
+                    duration: 1000,
+                    success: function () {
+                      wx.navigateTo({
+                        url: '../reg/reg',
+                      })
+                    }
+                  })
+                },
+              })
+
+            }
+          })
+
+
+
+        } else if(res.cancel) {
+          
+        }
+
+      }
+    })
+
+  },
+  pay(){
+   
   }
 })

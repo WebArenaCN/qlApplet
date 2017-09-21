@@ -3,7 +3,7 @@
 <view class="balance">
     <image src="../../images/mywallet.png"></image>
     <view class="txt">
-        <text class="money">￥{{mymoney}}.00</text>
+        <text class="money">￥{{mymoney}}</text>
         <text class="chinese">车费余额</text>
     </view>
 
@@ -63,4 +63,3 @@
 
 
 </modal>
-<button class="clearStorage" hidden="{{showClearBtn}}" bindtap="clearStorage">注销</button>

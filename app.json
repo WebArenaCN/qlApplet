@@ -1,5 +1,6 @@
 {
   "pages":[
+    
     "pages/index/index",
     "pages/reg/reg",
     "pages/recharge/recharge",
@@ -7,7 +8,7 @@
     "pages/setting/setting",
     "pages/service/service",
     "pages/run/run",
-   "pages/over/over",
+  "pages/over/over",
     "pages/you/you"
     
   ],
