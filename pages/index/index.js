@@ -16,6 +16,7 @@ Page({
     nullHouse:true,
     scanGet:false,
     loadGet:true,
+    runStatus:false,
 
   },
 
@@ -23,14 +24,30 @@ Page({
  onReady:function(e){
    this.mapCtx = wx.createMapContext('mymap')
  },
+onShow:function(){
+ this.setData({
+   loadGet:false
+ })
+ this.checkBikeStart();
+},
+onHide: function () {
 
-  onLoad: function () {
-    if(this.data.loadGet){
-      console.log('加载了');
-          this.checkBikeStart();
+},
+onLoad: function () {
+  this.checkBikeStart();
+    if (this.data.loadGet){
+            console.log(1);
+         
+
     }else{
-      console.log('扫码了')
-      setInterval(this.checkBikeStart,5000);
+      console.log(2);
+      var time2=setInterval(this.checkBikeStart, 5000);
+      if (this.data.runStatus) {
+        clearInterval(time2);
+        wx.redirectTo({
+               url: '../run/run',
+        });
+      }
     }
    
     wx.setStorageSync('vicLogin', 'fail');
@@ -45,7 +62,7 @@ Page({
        let marker = this.createMarker(res);
        wx.setStorageSync('lng',longitude);
        wx.setStorageSync('lat', latitude);
-     //  console.log(latitude+','+longitude);
+     
        var markers=[];
        markers.push(marker);
 
@@ -108,7 +125,7 @@ Page({
                  if(cont==undefined){
                    var cont='重新登录'
                  }
-                 console.log(cont)
+                // console.log(cont)
                  wx.showModal({
                    title: '提示',
                    content:cont,
@@ -239,20 +256,21 @@ Page({
        
         wx.scanCode({
           success: (res) => {
+
             
            //车牌号对象   console.log(res);
             var bike_num=String(res.result).split('=')[1];
-            this.getBikePwd(bike_num);
+           
           //车牌号    console.log(bike_num);
            wx.removeStorageSync('bikeId');
                 wx.setStorageSync('bikeId',bike_num);
            this.setData({
              loadGet:false
            })
-           return this.onLoad();
-                
+         
+           this.getBikePwd(bike_num);    
               
-            
+            this.onLoad();
               
               
           },
@@ -339,34 +357,26 @@ Page({
           },
           success: function (res) {
       //  console.log(res);
-
-          if (res.data.status == 200) {
+    if (res.data.status == 200) {
 
             var user_startTime = res.data.data.usebiketime;//用户骑行开始时间
             if (res.data.data.usebiketime == 0) {
-              console.log('没有骑行');
+               console.log('没有骑行');
 
 
             } else if (res.data.data.usebiketime > 0) {
-              // var runTime = Math.round((bike_nowTime - user_startTime) / 60);
-              // var checkOver = res.data.data.usebiketime;
-
-              // console.log(runTime);
-              // that.setData({
-              //   run_min: runTime,
-              // })
+              
+             // console.log(that)
+             if(that.route=='pages/index/index'){
+               
+              }
+          
               that.setData({
                 nullHouse: true,
-                //bikeShow: res.data.data,
+                runStatus:true,
 
               })
-
-              wx.redirectTo({
-                url: '../run/run',
-              });
-
-
-
+            
             }
 
 
@@ -419,7 +429,8 @@ Page({
                 showCancel:false,
                 success:function(res){
                   if(res.confirm){
-
+                 
+                 
                   }else if(res.cancel){}
                 }
                 
@@ -493,5 +504,6 @@ Page({
 
     }
 
-  }
+  },
+
 })

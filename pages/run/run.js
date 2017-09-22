@@ -18,8 +18,28 @@ Page({
     run_min:'0',
     bikeShow:'',
     bikeShutDown:false,
+    usebiketime:'1',
+  },
+  /**
+  * 生命周期函数--监听页面初次渲染完成
+  */
+  onReady: function () {
+
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.checkBikeStatus();
   },
 
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+         
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -33,9 +53,24 @@ Page({
            bikeId:bikeId
          })
       },
-    })
-   setInterval(this.checkBikeStatus,10000);
-    //this.checkBikeStatus();
+    });
+    this.checkBikeStatus();
+  
+    if (this.data.usebiketime==0){
+     console.log('停车了');
+         wx.redirectTo({
+           url: '../over/over',
+         });
+         clearInterval(time1);
+    } else if (this.data.usebiketime != 0){
+      
+    var time1=setInterval(this.checkBikeStatus,1000)
+   
+   
+    }
+       
+  
+   
     let lati = wx.getStorageSync('lat');
     let lng = wx.getStorageSync('lng');
     this.setData({
@@ -67,7 +102,7 @@ Page({
               "Content-Type": 'application/json'
             },
             success: function (res) {
-
+                 console.log(res);
               if (res.data.status == 200) {
                 wx.showToast({
                   title: '成功',
@@ -79,7 +114,7 @@ Page({
                   bikeShow: res.data.data,
 
                 })
-              } else if (res.data.status == 400){
+              }else if (res.data.status == 400){
                 var tips = res.data.msg;
                 wx.showModal({
                   title: '提示',
@@ -89,6 +124,8 @@ Page({
                     if (res.confirm) {
 
                     
+                    }else if(res.cancel){
+
                     }
                   }
                 })
@@ -105,29 +142,9 @@ Page({
   },
 
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    // var bikeId = wx.getStorageSync('bikeId');
-    // //console.log(bikeId);
-    // this.getBikePwd(bikeId);
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-     
-  },
  
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
+
 
   /**
    * 生命周期函数--监听页面卸载
@@ -176,9 +193,7 @@ Page({
           
              if(res.data.status==200){
                  console.log(res.data);
-           
-       
-                 that.setData({
+              that.setData({
                    bikeShow: res.data.data,
                  
                  })
@@ -236,13 +251,18 @@ Page({
 
               var user_startTime = res.data.data.usebiketime;//用户骑行开始时间
               if (user_startTime == 0) {
-                // console.log('没有骑行');
-                wx.navigateTo({
-                  url: '../over/over',
+                // console.log('骑行结束');
+                that.setData({
+                    usebiketime:0,
+                    
                 })
 
               } else if (user_startTime > 0) {
-                // console.log(user_startTime);
+                
+                that.setData({
+                  usebiketime: user_startTime
+                })
+        
                 var runTime = Math.round((bike_nowTime - user_startTime) / 60);
                 var checkOver = res.data.data.usebiketime;
 
@@ -250,20 +270,15 @@ Page({
                 that.setData({
                   run_min: runTime,
                 })
-                //  setTimeout(that.closePwdWindow,1000);
+          
 
 
 
               }
 
-            } else {
-              wx.showLoading({
-                title: '加载出错',
-              })
-
-              setTimeout(function () {
-                wx.hideLoading()
-              }, 1500)
+            
+            } else if (res.data.status == 400){
+             
             }
         
           },
