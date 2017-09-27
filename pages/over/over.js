@@ -23,7 +23,7 @@ Page({
   },
 
 
-  //检验自行车用车结束
+  //计算费用
   checkUseOver() {
     var that = this;
     var bike_nowTime = Date.parse(new Date()) / 1000;
@@ -40,7 +40,7 @@ Page({
             "Content-Type": "application/json"
           },
           success: function (res) {
-            console.log(res);
+           // console.log(res);
             if (res.data.status == 200) {
               var time = res.data.data.useDurationStr;
               var payment = res.data.data.tradeTurnover;

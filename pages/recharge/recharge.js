@@ -6,9 +6,9 @@ var b = 0
 var yajinid = 0
 Page({
   data: {
-    mymoney: 0,
+    mymoney: 0,//我的余额  
     disabled: false,
-    curNav: 1,
+    curNav: 0,
     curIndex: 0,
     cart: [],
     cartTotal: 0,
@@ -56,9 +56,11 @@ Page({
   },
   //充值金额分类渲染模块
   selectNav(event) {
+    console.log(event)
     let id = event.target.dataset.id,
     index = parseInt(event.target.dataset.index);
     b = parseInt(event.target.dataset.money);
+   // console.log(b)
     self = this;
     this.setData({
       curNav: id,
@@ -75,7 +77,16 @@ Page({
        showClearBtn:false,
      })
    }else{
-     
+     wx.showToast({
+       title: '登录超时',
+       icon:'loading',
+       duration:1500,
+       success:function(){
+         wx.redirectTo({
+           url: '../reg/reg',
+         })
+       }
+     })
    }
     b = 0;
     this.setData({
@@ -92,12 +103,57 @@ Page({
   },
   //去充值功能模块
   goblance:function(event) {
-    money += b;
-    this.setData({
-      lockhidden: false,
-      mymoney: money,
-      sucmoney: b,
+    
+   if(b!=0){
+     let phone = wx.getStorageSync('userPhone');
+     let price=b;
+     let url="https://www.qinglibike.com/qlbike/servlet/AppPayServlet?phone="+phone+"&price="+price;
+wx.request({
+  method:'GET',
+  url: url,
+  header:{
+    'Content-Type':'application/json'
+  },
+  success:function(res){
+    console.log(res.data[0]);
+    wx.requestPayment({
+      'timeStamp': res.data[0].timeStamp,
+      'nonceStr': res.data[0].nonceStr,
+      'package': res.data[0].prepayId,
+      'signType': 'MD5',
+      'paySign': res.data[0].paySign,
+      'success': function (res) {
+        console.log(res);
+      },
+      'fail': function (res) {
+        console.log(res);
+      }
     })
+  },
+  fail:function(res){
+    console.log('fail');
+  }
+})
+
+  // this.setData({
+    //   lockhidden: false,
+    //   mymoney: money,
+    //   sucmoney: b,
+    // })
+   }else{
+     wx.showModal({
+       title: '提示',
+       content: '充值金额不能为0',
+       showCancel: false,
+       success: function () {
+
+       }
+     })
+
+   }
+    
+   
+    
   },
   confirm: function () {
     this.setData({
@@ -161,9 +217,9 @@ Page({
           success: function (res) {
 
             if (res.data.status == 200) {
-console.log(res);
+              console.log(res);
               that.setData({
-                mymoney:res.data.data.usermoney,
+                mymoney:(res.data.data.usermoney)/100,
                
               })
 

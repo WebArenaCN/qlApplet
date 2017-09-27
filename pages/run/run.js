@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    switchTouch:false,
+    swColor:'',
     runModal_show:false,
     nullHouse: false,
     scale: 18,
@@ -57,14 +58,14 @@ Page({
     this.checkBikeStatus();
   
     if (this.data.usebiketime==0){
-     console.log('停车了');
-         wx.redirectTo({
-           url: '../over/over',
-         });
-         clearInterval(time1);
-    } else if (this.data.usebiketime != 0){
+       console.log(0)
+       clearInterval(this.timer3);
+       wx.redirectTo({
+         url: '../over/over',
+       });
+    }else if (this.data.usebiketime!= 0){
       
-    var time1=setInterval(this.checkBikeStatus,1000)
+    this.timer3=setInterval(this.checkBikeStatus,5000)
    
    
     }
@@ -92,7 +93,7 @@ Page({
         key: 'token',
         success: function (res) {
           var token = res.data;
-          console.log(token);
+         // console.log(token);
           var bikeId=wx.getStorageSync('bikeId');
           var url = "https://www.qinglibike.com/qlbike/bike/stopbike/" + bikeId + '/' + token;
           wx.request({
@@ -102,7 +103,7 @@ Page({
               "Content-Type": 'application/json'
             },
             success: function (res) {
-                 console.log(res);
+                // console.log(res);
               if (res.data.status == 200) {
                 wx.showToast({
                   title: '成功',
@@ -112,19 +113,19 @@ Page({
 
                 that.setData({
                   bikeShow: res.data.data,
-
+                  switchTouch: true,
+                  swColor: 'gray',
                 })
               }else if (res.data.status == 400){
                 var tips = res.data.msg;
                 wx.showModal({
                   title: '提示',
-                  content: '停车失败',
+                  content:tips,
                   showCancel: false,
                   success: function (res) {
                     if (res.confirm) {
-
-                    
-                    }else if(res.cancel){
+                      
+                     }else if(res.cancel){
 
                     }
                   }
@@ -222,12 +223,7 @@ Page({
     })
     
   },
-  // clickArea: function () {
-  //   var that = this; 
-  //   this.setData({
-  //     nullHouse: false,  //弹窗显示  
-  //      });
-  // }, 
+
 
    //检验自行车状态
   checkBikeStatus(){
@@ -255,10 +251,12 @@ Page({
                 that.setData({
                     usebiketime:0,
                     
-                })
+                });
+               
+               
 
               } else if (user_startTime > 0) {
-                
+             
                 that.setData({
                   usebiketime: user_startTime
                 })

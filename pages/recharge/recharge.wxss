@@ -46,11 +46,11 @@
  
 }
 .balance-demo button[data-id="5"] {
-  
+  font-family: '微软雅黑'
 }
+
 .balance-demo button.selected {
   background-color: #EEA235;
-
   color: #fff;
 }
 .balance-demo button text {
