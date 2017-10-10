@@ -119,10 +119,10 @@ wx.request({
     wx.requestPayment({
       'timeStamp': res.data[0].timeStamp,
       'nonceStr': res.data[0].nonceStr,
-      'package': res.data[0].prepayId,
+      'package': "prepay_id="+res.data[0].prepayId,
       'signType': 'MD5',
       'paySign': res.data[0].paySign,
-      'success': function (res) {
+      'success': function (res){
         console.log(res);
       },
       'fail': function (res) {
@@ -239,5 +239,173 @@ wx.request({
 
       }
     })
+  },
+  /* 微信支付 */
+
+
+  wxpay: function () {
+    var that = this
+    //登陆获取code
+    wx.login({
+      success: function (res) {
+        console.log(res.code)
+        //获取openid
+        that.getOpenId(res.code)
+      }
+    });
+  },
+
+  getOpenId: function (code) {
+    var that = this;
+    wx.request({
+      method: 'GET',
+      url: "https://api.weixin.qq.com/sns/jscode2session?appid=wx5a157c7ebbb7d812&secret=1fc746a359d91a4a9908ae1cdd1c2880&js_code=" + code + "&grant_type=authorization_code",
+      header: {
+        "Content-Type": "application/json"
+      },
+     
+      success: function (res) {
+        that.generateOrder(res.data.openid)
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
+
+  /**生成商户订单 */
+  // goblance: function (event) {
+
+  //   if (b != 0) {
+  //     let phone = wx.getStorageSync('userPhone');
+  //     let price = b;
+  //     let url = "https://www.qinglibike.com/qlbike/servlet/AppPayServlet?phone=" + phone + "&price=" + price;
+     
+
+  //     // this.setData({
+  //     //   lockhidden: false,
+  //     //   mymoney: money,
+  //     //   sucmoney: b,
+  //     // })
+  //   } else {
+    
+
+  //   }
+
+
+
+  // },
+
+
+  generateOrder: function (openid) {
+    var that = this
+    //统一支付
+    if(b!=0){
+      let phone = wx.getStorageSync('userPhone');
+      let price = b;
+      let url = "https://www.qinglibike.com/qlbike/servlet/AppPayServlet?phone=" + phone + "&price=" + price;
+
+      wx.request({
+        method: 'GET',
+        url: url,
+        header: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          console.log(res.data[0]);
+         
+          var pay = res.data
+          //发起支付
+          var timeStamp = pay[0].timeStamp;
+          var packages = pay[0].package;
+          var paySign = pay[0].paySign;
+          var nonceStr = pay[0].nonceStr;
+          var param = { "timeStamp": timeStamp, "package": packages, "paySign": paySign, "signType": "MD5", "nonceStr": nonceStr };
+          that.pay(param);
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+          // wx.requestPayment({
+          //   'timeStamp': res.data[0].timeStamp,
+          //   'nonceStr': res.data[0].nonceStr,
+          //   'package': "prepay_id=" + res.data[0].prepayId,
+          //   'signType': 'MD5',
+          //   'paySign': res.data[0].paySign,
+          //   'success': function (res) {
+          //     console.log(res);
+          //   },
+          //   'fail': function (res) {
+          //     console.log(res);
+          //   }
+          // })
+        },
+        fail: function (res) {
+          console.log('fail');
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '充值金额不能为0',
+        showCancel: false,
+        success: function () {
+
+        }
+      })
+    }
+
+
+  },
+
+
+  /* 支付   */
+  pay: function (param) {
+    console.log("支付")
+    console.log(param);
+    wx.requestPayment({
+      timeStamp: param.timeStamp,
+      nonceStr: param.nonceStr,
+      package:'prepay_id='+param.package,
+      signType: param.signType,
+      paySign: param.paySign,
+      success: function (res) {
+        // success
+        wx.navigateBack({
+          delta: 1, // 回退前 delta(默认为1) 页面
+          success: function (res) {
+            wx.showToast({
+              title: '支付成功',
+              icon: 'success',
+              duration: 2000
+            })
+          },
+          fail: function (res) {
+            // fail
+cosnole.log(res)
+          },
+          complete: function () {
+            // complete
+          }
+        })
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
   }
+
 })

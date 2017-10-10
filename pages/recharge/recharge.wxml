@@ -31,7 +31,7 @@
       <navigator url="../../pages/service/service">《充值协议》</navigator>
     </view>
     <text>轻力单车不会以任何形式要求您输入银行账号和密码</text>
-    <button bindtap="goblance" data-money="500">去充值</button>
+    <button bindtap="wxpay" data-money="500">去充值</button>
   </view>
   <!-- <view>押金{{yajinmoney}}元 <navigator url="../hongbao/hongbao" bindtap="yajin">充押金</navigator></view> -->
 
