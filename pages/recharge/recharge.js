@@ -243,71 +243,51 @@ wx.request({
   /* 微信支付 */
 
 
-  wxpay: function () {
-    var that = this
-    //登陆获取code
-    wx.login({
-      success: function (res) {
-        console.log(res.code)
-        //获取openid
-        that.getOpenId(res.code)
-      }
-    });
-  },
+  // wxpay: function () {
+  //   var that = this
+  //   //登陆获取code
+  //   wx.login({
+  //     success: function (res) {
+  //       console.log(res.code)
+  //       //获取openid
+  //       that.getOpenId(res.code)
+  //     }
+  //   });
+  // },
 
-  getOpenId: function (code) {
-    var that = this;
-    wx.request({
-      method: 'GET',
-      url: "https://api.weixin.qq.com/sns/jscode2session?appid=wx5a157c7ebbb7d812&secret=1fc746a359d91a4a9908ae1cdd1c2880&js_code=" + code + "&grant_type=authorization_code",
-      header: {
-        "Content-Type": "application/json"
-      },
+  // getOpenId: function (code) {
+  //   var that = this;
+  //   wx.request({
+  //     method: 'GET',
+  //     url: "https://api.weixin.qq.com/sns/jscode2session?appId=wx5a157c7ebbb7d812&secret=1fc746a359d91a4a9908ae1cdd1c2880&js_code=" + code + "&grant_type=authorization_code",
+  //     header: {
+  //       "Content-Type": "application/json"
+  //     },
      
-      success: function (res) {
-        that.generateOrder(res.data.openid)
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
-  },
-
-  /**生成商户订单 */
-  // goblance: function (event) {
-
-  //   if (b != 0) {
-  //     let phone = wx.getStorageSync('userPhone');
-  //     let price = b;
-  //     let url = "https://www.qinglibike.com/qlbike/servlet/AppPayServlet?phone=" + phone + "&price=" + price;
-     
-
-  //     // this.setData({
-  //     //   lockhidden: false,
-  //     //   mymoney: money,
-  //     //   sucmoney: b,
-  //     // })
-  //   } else {
-    
-
-  //   }
-
-
-
+  //     success: function (res) {
+  //       that.generateOrder(res.data.openid)
+  //     },
+  //     fail: function () {
+  //       // fail
+  //     },
+  //     complete: function () {
+  //       // complete
+  //     }
+  //   })
   // },
 
 
-  generateOrder: function (openid) {
+
+
+  generateOrder: function () {
     var that = this
     //统一支付
     if(b!=0){
+      console.log(b);
       let phone = wx.getStorageSync('userPhone');
       let price = b;
       let url = "https://www.qinglibike.com/qlbike/servlet/AppPayServlet?phone=" + phone + "&price=" + price;
-
+      
       wx.request({
         method: 'GET',
         url: url,
@@ -320,35 +300,12 @@ wx.request({
           var pay = res.data
           //发起支付
           var timeStamp = pay[0].timeStamp;
-          var packages = pay[0].package;
+          var packages = pay[0].prepayId;
           var paySign = pay[0].paySign;
           var nonceStr = pay[0].nonceStr;
           var param = { "timeStamp": timeStamp, "package": packages, "paySign": paySign, "signType": "MD5", "nonceStr": nonceStr };
           that.pay(param);
          
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-          // wx.requestPayment({
-          //   'timeStamp': res.data[0].timeStamp,
-          //   'nonceStr': res.data[0].nonceStr,
-          //   'package': "prepay_id=" + res.data[0].prepayId,
-          //   'signType': 'MD5',
-          //   'paySign': res.data[0].paySign,
-          //   'success': function (res) {
-          //     console.log(res);
-          //   },
-          //   'fail': function (res) {
-          //     console.log(res);
-          //   }
-          // })
         },
         fail: function (res) {
           console.log('fail');
@@ -356,11 +313,11 @@ wx.request({
       })
     }else{
       wx.showModal({
-        title: '提示',
+         title: '提示',
         content: '充值金额不能为0',
         showCancel: false,
         success: function () {
-
+             console.log('ok');
         }
       })
     }
@@ -374,6 +331,7 @@ wx.request({
     console.log("支付")
     console.log(param);
     wx.requestPayment({
+      appId: 'wx5a157c7ebbb7d812',
       timeStamp: param.timeStamp,
       nonceStr: param.nonceStr,
       package:'prepay_id='+param.package,
@@ -392,10 +350,11 @@ wx.request({
           },
           fail: function (res) {
             // fail
-cosnole.log(res)
+ console.log(res)
           },
-          complete: function () {
+          complete: function (data) {
             // complete
+            console.log(11);
           }
         })
       },
