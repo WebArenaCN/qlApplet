@@ -86,7 +86,7 @@ Page({
                 if (res.data.status == 200) {
                   wx.setStorageSync('vicLogin', 'success');
                   var bikeArr = res.data.data;
-                  //  console.log(bikeArr)
+                console.log(bikeArr)
                   for (var item in bikeArr) {
 
                     if (bikeArr[item].bikealert != 0) {

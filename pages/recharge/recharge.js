@@ -243,38 +243,38 @@ wx.request({
   /* 微信支付 */
 
 
-  // wxpay: function () {
-  //   var that = this
-  //   //登陆获取code
-  //   wx.login({
-  //     success: function (res) {
-  //       console.log(res.code)
-  //       //获取openid
-  //       that.getOpenId(res.code)
-  //     }
-  //   });
-  // },
+  wxpay: function () {
+    var that = this
+    //登陆获取code
+    wx.login({
+      success: function (res) {
+        console.log(res.code)
+        //获取openid
+        that.getOpenId(res.code)
+      }
+    });
+  },
 
-  // getOpenId: function (code) {
-  //   var that = this;
-  //   wx.request({
-  //     method: 'GET',
-  //     url: "https://api.weixin.qq.com/sns/jscode2session?appId=wx5a157c7ebbb7d812&secret=1fc746a359d91a4a9908ae1cdd1c2880&js_code=" + code + "&grant_type=authorization_code",
-  //     header: {
-  //       "Content-Type": "application/json"
-  //     },
+  getOpenId: function (code) {
+    var that = this;
+    wx.request({
+      method: 'GET',
+      url: "https://api.weixin.qq.com/sns/jscode2session?appId=wx5a157c7ebbb7d812&secret=1fc746a359d91a4a9908ae1cdd1c2880&js_code=" + code + "&grant_type=authorization_code",
+      header: {
+        "Content-Type": "application/json"
+      },
      
-  //     success: function (res) {
-  //       that.generateOrder(res.data.openid)
-  //     },
-  //     fail: function () {
-  //       // fail
-  //     },
-  //     complete: function () {
-  //       // complete
-  //     }
-  //   })
-  // },
+      success: function (res) {
+        that.generateOrder(res.data.openid)
+      },
+      fail: function () {
+        // fail
+      },
+      complete: function () {
+        // complete
+      }
+    })
+  },
 
 
 
@@ -328,38 +328,26 @@ wx.request({
 
   /* 支付   */
   pay: function (param) {
-    console.log("支付")
-    console.log(param);
+   
+ //   console.log(param);
     wx.requestPayment({
-      appId: 'wx5a157c7ebbb7d812',
+     
       timeStamp: param.timeStamp,
       nonceStr: param.nonceStr,
       package:'prepay_id='+param.package,
       signType: param.signType,
       paySign: param.paySign,
       success: function (res) {
-        // success
-        wx.navigateBack({
-          delta: 1, // 回退前 delta(默认为1) 页面
-          success: function (res) {
-            wx.showToast({
-              title: '支付成功',
-              icon: 'success',
-              duration: 2000
+        
+        console.log(res);
+            wx.showModal({
+              title: '222',
+              content:'222',
             })
-          },
-          fail: function (res) {
-            // fail
- console.log(res)
-          },
-          complete: function (data) {
-            // complete
-            console.log(11);
-          }
-        })
       },
       fail: function (res) {
         // fail
+       console.log(res);
       },
       complete: function () {
         // complete
