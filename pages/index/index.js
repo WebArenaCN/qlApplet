@@ -157,9 +157,9 @@ Page({
               showCancel: false,
               success: function (res) {
                 if (res.confirm) {
-                  wx.navigateTo({
-                    url: '../reg/reg',
-                  });
+                  // wx.navigateTo({
+                  //   url: '../reg/reg',
+                  // });
                 } else if (res.cancel) {
                   console.log('用户点击取消')
                 }
@@ -308,10 +308,10 @@ Page({
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
-                wx.navigateTo({
-                  url: '../reg/reg'
-                })
-              }
+              wx.navigateTo({
+                url: '../you/you'
+              })
+               }
             }
           })
         }

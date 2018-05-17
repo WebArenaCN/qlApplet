@@ -27,7 +27,7 @@
       </navigator>
       <button plain='true' hover-class='none' open-type='share' class='menu_item invite_frd'>
        <image src='../../images/invite.png'></image>
-        <view>邀请好友</view>
+        <view>分享好友</view>
       </button>
       <!-- <view class='menu_item'>
        <image src='../../images/feedback.png'></image>

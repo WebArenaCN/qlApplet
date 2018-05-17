@@ -2,13 +2,7 @@
 <view class="container">
   <!--map模块-->
   <map class="ql-map" id="mymap" show-location="true" longitude="{{longitude}}" latitude="{{latitude}}" polyline="" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" bindcontroltap="controltap" />
-  <!-- 扫码弹出层
 
-    <image class="ql_scan" src="../../images/scanma.png"></image>
-  
-  <modal class="ql-lock" hidden="{{lockhidden}}" title="提示" confirm-text="确定" bindconfirm="confirm" no-cancel="true">
-    请扫描车身或者车锁上的二维码
-  </modal>  -->
 
    <view class="ql-new" hidden="{{runhidden}}">
     <view class='ql_tips'>
